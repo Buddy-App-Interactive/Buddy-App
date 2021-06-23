@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_chats">
+
+    <fragment
+        android:id="@+id/navigation_chats"
+        android:name="com.interactive.buddy.ui.login.ui.main.ui.home.HomeFragment"
+        android:label="@string/menu_chats"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_requests"
+        android:name="com.interactive.buddy.ui.login.requests.RequestFragment"
+        android:label="@string/menu_requests"
+        tools:layout="@layout/fragment_request" />
+
+    <fragment
+        android:id="@+id/navigation_mood_selector"
+        android:name="com.interactive.buddy.ui.login.ui.main.ui.notifications.NotificationsFragment"
+        android:label="@string/menu_mood_selector"
+        tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/navigation_karma"
+        android:name="com.interactive.buddy.ui.login.ui.main.ui.notifications.NotificationsFragment"
+        android:label="@string/menu_karma"
+        tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.interactive.buddy.ui.login.ui.main.ui.notifications.NotificationsFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_notifications" />
+</navigation>

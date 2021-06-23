@@ -27,4 +27,12 @@
     <string name="action_register">Register</string>
     <string name="terms_conditions">Terms and Conditions</string>
     <string name="register_key_title">Register anonymously</string>
+    <string name="title_activity_navigation">MainActivity</string>
+
+    <!-- texts for bottom navigation -->
+    <string name="menu_chats">Chats</string>
+    <string name="menu_requests">Requests</string>
+    <string name="menu_mood_selector">Mood Selector</string>
+    <string name="menu_karma">Karma</string>
+    <string name="menu_profile">Profile</string>
 </resources>

@@ -5,5 +5,6 @@ package com.interactive.buddy.data.model
  */
 data class LoggedInUser(
         val userId: String,
-        val displayName: String
+        val username: String,
+        val email: String,
 )

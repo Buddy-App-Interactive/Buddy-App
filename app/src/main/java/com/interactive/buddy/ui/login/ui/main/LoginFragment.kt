@@ -22,14 +22,12 @@ import com.interactive.buddy.ui.login.LoggedInUserView
 import com.interactive.buddy.ui.login.LoginViewModel
 import com.interactive.buddy.ui.login.LoginViewModelFactory
 
-/**
- * A placeholder fragment containing a simple view.
- */
-class PlaceholderFragment : Fragment() {
+class LoginFragment : Fragment() {
 
     private lateinit var pageViewModel: PageViewModel
     private var _binding: FragmentLoginBinding? = null
     private lateinit var loginViewModel: LoginViewModel
+    private var fragment = this;
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -105,7 +103,8 @@ class PlaceholderFragment : Fragment() {
                     EditorInfo.IME_ACTION_DONE ->
                         loginViewModel.login(
                             username.text.toString(),
-                            password.text.toString()
+                            password.text.toString(),
+                            fragment.requireContext()
                         )
                 }
                 false
@@ -113,7 +112,7 @@ class PlaceholderFragment : Fragment() {
 
             login.setOnClickListener {
                 loading.visibility = View.VISIBLE
-                loginViewModel.login(username.text.toString(), password.text.toString())
+                loginViewModel.login(username.text.toString(), password.text.toString(), fragment.requireContext())
             }
 
             return root
@@ -132,8 +131,8 @@ class PlaceholderFragment : Fragment() {
          * number.
          */
         @JvmStatic
-        fun newInstance(sectionNumber: Int): PlaceholderFragment {
-            return PlaceholderFragment().apply {
+        fun newInstance(sectionNumber: Int): LoginFragment {
+            return LoginFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_SECTION_NUMBER, sectionNumber)
                 }
@@ -148,7 +147,7 @@ class PlaceholderFragment : Fragment() {
 
     private fun updateUiWithUser(model: LoggedInUserView) {
         val welcome = getString(R.string.welcome)
-        val displayName = model.displayName
+        val displayName = model.username
         // TODO : initiate successful logged in experience
         Toast.makeText(
             this.context,

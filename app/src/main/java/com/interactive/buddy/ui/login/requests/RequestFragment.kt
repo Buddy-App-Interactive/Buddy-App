@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ListView
 import androidx.annotation.RequiresApi
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -27,7 +28,7 @@ class RequestFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var isOpenRequests: Boolean = false
     private lateinit var fabCreateRequest: FloatingActionButton;
-    private lateinit var btnMyRequests: FloatingActionButton;
+    private lateinit var btnMyRequests: Button;
     private lateinit var lvRequests: ListView
 
     override fun onCreate(savedInstanceState: Bundle?) {

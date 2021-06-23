@@ -23,4 +23,12 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_navigation">MainActivity</string>
+
+    <!-- texts for bottom navigation -->
+    <string name="menu_chats">Chats</string>
+    <string name="menu_requests">Requests</string>
+    <string name="menu_mood_selector">Mood Selector</string>
+    <string name="menu_karma">Karma</string>
+    <string name="menu_profile">Profile</string>
 </resources>

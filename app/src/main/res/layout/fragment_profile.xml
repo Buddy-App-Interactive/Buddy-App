@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="70dp"
+    tools:context=".ui.login.requests.RequestFragment">
+
+    <EditText
+        android:id="@+id/editUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="@string/editTextHint_username"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="100dp"/>
+
+    <EditText
+        android:id="@+id/editEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editUsername"
+        android:layout_marginTop="5dp"
+        android:hint="@string/editTextHint_email"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="100dp"/>
+
+    <Button
+        android:id="@+id/btnSaveProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_save_profile"
+        android:layout_below="@id/editEmail"
+        android:layout_marginLeft="20dp"
+        />
+
+    <EditText
+        android:id="@+id/editPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnSaveProfile"
+        android:layout_marginTop="20dp"
+        android:hint="@string/editTextHint_password"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="100dp"/>
+
+    <EditText
+        android:id="@+id/editRepeatPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editPassword"
+        android:layout_marginTop="5dp"
+        android:hint="@string/editTextHint_repeatPassword"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="100dp"/>
+
+    <Button
+        android:id="@+id/btnChangePassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_save_password"
+        android:layout_below="@id/editRepeatPassword"
+        android:layout_marginLeft="20dp"
+        />
+
+    <EditText
+        android:id="@+id/editLanguages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnChangePassword"
+        android:hint="@string/editTextHint_languages"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="100dp"/>
+
+    <Button
+        android:id="@+id/btnSaveLanguage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_save_language"
+        android:layout_below="@id/editLanguages"
+        android:layout_marginLeft="20dp"
+        />
+</RelativeLayout>

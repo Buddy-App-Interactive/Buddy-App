@@ -29,7 +29,7 @@
         tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.interactive.buddy.ui.login.ui.main.ui.notifications.NotificationsFragment"
+        android:name="com.interactive.buddy.ui.profile.ProfileFragment"
         android:label="@string/menu_profile"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_profile" />
 </navigation>

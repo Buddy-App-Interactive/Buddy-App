@@ -1,15 +1,30 @@
 <resources>
     <string name="app_name">Buddy</string>
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
+    <string name="prompt_email">E-Mail</string>
     <string name="prompt_password">Password</string>
+    <string name="prompt_username">Username</string>
+    <string name="prompt_password_repeat">Repeat password</string>
+    <string name="prompt_key">Key</string>
     <string name="action_login">Log In</string>
+    <string name="action_login_key">Log In with key</string>
+    <string name="register_title">Register</string>
     <string name="action_sign_in_short">Sign in</string>
+    <string name="action_register_key">Get Key</string>
     <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_email">Not a valid email</string>
+    <string name="invalid_username">Username must be set</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="register_failed">"Login failed"</string>
+    <string name="key_how_work">How does it work?</string>
+    <string name="forgot_password">Forgot password?</string>
     <string name="title_activity_login_register">LoginRegisterActivity</string>
     <string name="tab_register">Register</string>
     <string name="tab_login">Login</string>
+    <string name="login_title">Login with existing Account</string>
+    <string name="login_key_title">Login with key</string>
+    <string name="action_register">Register</string>
+    <string name="terms_conditions">Terms and Conditions</string>
+    <string name="register_key_title">Register anonymously</string>
 </resources>

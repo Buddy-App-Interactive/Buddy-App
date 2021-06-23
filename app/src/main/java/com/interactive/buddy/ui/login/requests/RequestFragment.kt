@@ -18,6 +18,7 @@ import com.interactive.buddy.ui.login.requests.ListItems.OpenRequestsListAdapter
 import com.interactive.buddy.ui.login.requests.ListItems.YourRequestsListAdapter
 import com.interactive.buddy.ui.login.requests.ListItems.YourRequestsListItem
 import com.interactive.buddy.ui.login.ui.main.NavigationActivity
+import com.interactive.buddy.ui.request.NewRequestFragment
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -77,6 +78,7 @@ class RequestFragment : Fragment(), View.OnClickListener {
         }
 
         btnMyRequests.setOnClickListener(this);
+        fabCreateRequest.setOnClickListener(this)
     }
 
     companion object {
@@ -103,6 +105,11 @@ class RequestFragment : Fragment(), View.OnClickListener {
             val fm: FragmentManager = requireActivity().supportFragmentManager
             val transaction: FragmentTransaction = fm.beginTransaction()
             transaction.replace(R.id.container, fragment)
+            transaction.commit()
+        } else if (v!!.id == R.id.fabCreateRequest) {
+            val fm: FragmentManager = requireActivity().supportFragmentManager
+            val transaction: FragmentTransaction = fm.beginTransaction()
+            transaction.replace(R.id.container, NewRequestFragment())
             transaction.commit()
         }
     }

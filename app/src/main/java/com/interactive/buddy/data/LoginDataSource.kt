@@ -1,20 +1,49 @@
 package com.interactive.buddy.data
 
+import android.content.Context
+import android.util.Log
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.interactive.buddy.data.interfaces.ServerListener
 import com.interactive.buddy.data.model.LoggedInUser
+import org.json.JSONObject
 import java.io.IOException
+
 
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
 class LoginDataSource {
 
-    fun login(username: String, password: String): Result<LoggedInUser> {
+    fun login(email: String, password: String, context: Context, callback: ServerListener) {
         try {
-            // TODO: handle loggedInUser authentication
-            val fakeUser = LoggedInUser(java.util.UUID.randomUUID().toString(), "Jane Doe")
-            return Result.Success(fakeUser)
+            val queue = Volley.newRequestQueue(context)
+            val stringRequest: StringRequest = object : StringRequest(
+                Method.POST, URLs.URL_LOGIN,
+                { response ->
+                    val userJson = JSONObject(response)
+
+                    val user = LoggedInUser(
+                        userJson.getString("id"),
+                        userJson.getString("username"),
+                        userJson.getString("email")
+                    )
+                    SharedPrefManager.getInstance(context).userLogin(user)
+                    callback.onSuccess(user);
+                },
+                { error -> error.message?.let { Log.d("FROG", it) }
+                    callback.onError(IOException("Error logging in")) })
+            {
+                override fun getParams(): Map<String, String> {
+                    val params: MutableMap<String, String> = HashMap()
+                    params["email"] = email
+                    params["password"] = password
+                    return params
+                }
+            }
+            queue.add(stringRequest);
         } catch (e: Throwable) {
-            return Result.Error(IOException("Error logging in", e))
+            callback.onError(IOException("Error logging in", e))
         }
     }
 

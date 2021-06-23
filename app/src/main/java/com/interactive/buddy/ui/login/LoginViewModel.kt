@@ -1,15 +1,18 @@
 package com.interactive.buddy.ui.login
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
-import com.interactive.buddy.data.LoginRepository
-import com.interactive.buddy.data.Result
 
 import com.interactive.buddy.R
+import com.interactive.buddy.data.LoginDataSource
+import com.interactive.buddy.data.interfaces.ServerListener
+import com.interactive.buddy.data.model.LoggedInUser
+import java.lang.Exception
 
-class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+class LoginViewModel(private val loginDataSource: LoginDataSource) : ViewModel() {
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
@@ -17,15 +20,20 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
 
-    fun login(username: String, password: String) {
-        // can be launched in a separate asynchronous job
-        val result = loginRepository.login(username, password)
+    var serverListener = object : ServerListener {
+        override fun onSuccess(loggedInUser: LoggedInUser) {
+            _loginResult.value = LoginResult(success = LoggedInUserView(username = loggedInUser.username))
+        }
 
-        if (result is Result.Success) {
-            _loginResult.value = LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
-        } else {
+        override fun onError(exception: Exception) {
             _loginResult.value = LoginResult(error = R.string.login_failed)
         }
+
+    }
+
+
+    fun login(username: String, password: String, context: Context) {
+        loginDataSource.login(username, password, context, serverListener)
     }
 
     fun loginDataChanged(username: String, password: String) {

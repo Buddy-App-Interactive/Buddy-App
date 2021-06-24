@@ -16,18 +16,17 @@
         <activity
             android:name=".ui.login.ui.main.NavigationActivity"
             android:label="@string/title_activity_navigation" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
             android:name=".ui.login.LoginRegisterActivity"
             android:label="@string/title_activity_login_register"
             android:theme="@style/Theme.Buddy.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

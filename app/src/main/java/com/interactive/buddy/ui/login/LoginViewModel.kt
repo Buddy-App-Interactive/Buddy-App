@@ -1,16 +1,14 @@
 package com.interactive.buddy.ui.login
 
 import android.content.Context
+import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import android.util.Patterns
-
 import com.interactive.buddy.R
 import com.interactive.buddy.data.LoginDataSource
 import com.interactive.buddy.data.interfaces.ServerListener
 import com.interactive.buddy.data.model.LoggedInUser
-import java.lang.Exception
 
 class LoginViewModel(private val loginDataSource: LoginDataSource) : ViewModel() {
 

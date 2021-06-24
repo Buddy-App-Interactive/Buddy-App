@@ -1,5 +1,6 @@
 package com.interactive.buddy.ui.login.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -154,6 +155,9 @@ class LoginFragment : Fragment() {
             "$welcome $displayName",
             Toast.LENGTH_LONG
         ).show()
+
+        val myIntent = Intent(this.requireContext(), NavigationActivity::class.java)
+        this.startActivity(myIntent)
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {

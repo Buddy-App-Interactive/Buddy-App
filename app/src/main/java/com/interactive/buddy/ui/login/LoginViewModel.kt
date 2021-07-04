@@ -13,7 +13,9 @@ import com.interactive.buddy.data.model.LoggedInUser
 class LoginViewModel(private val loginDataSource: LoginDataSource) : ViewModel() {
 
     private val _loginForm = MutableLiveData<LoginFormState>()
+    private val _loginKeyForm = MutableLiveData<LoginKeyFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
+    val loginKeyFormState: LiveData<LoginKeyFormState> = _loginKeyForm
 
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
@@ -30,12 +32,16 @@ class LoginViewModel(private val loginDataSource: LoginDataSource) : ViewModel()
     }
 
 
-    fun login(username: String, password: String, context: Context) {
-        loginDataSource.login(username, password, context, serverListener)
+    fun login(email: String, password: String, context: Context) {
+        loginDataSource.login(email, password, context, serverListener)
     }
 
-    fun loginDataChanged(username: String, password: String) {
-        if (!isUserNameValid(username)) {
+    fun loginKey(key: String, context: Context) {
+        loginDataSource.loginKey(key, context, serverListener)
+    }
+
+    fun loginDataChanged(email: String, password: String) {
+        if (!isEmailValid(email)) {
             _loginForm.value = LoginFormState(usernameError = R.string.invalid_email)
         } else if (!isPasswordValid(password)) {
             _loginForm.value = LoginFormState(passwordError = R.string.invalid_password)
@@ -45,16 +51,20 @@ class LoginViewModel(private val loginDataSource: LoginDataSource) : ViewModel()
     }
 
     // A placeholder username validation check
-    private fun isUserNameValid(username: String): Boolean {
-        return if (username.contains('@')) {
-            Patterns.EMAIL_ADDRESS.matcher(username).matches()
+    private fun isEmailValid(email: String): Boolean {
+        return if (email.contains('@')) {
+            Patterns.EMAIL_ADDRESS.matcher(email).matches()
         } else {
-            username.isNotBlank()
+            email.isNotBlank()
         }
     }
 
     // A placeholder password validation check
     private fun isPasswordValid(password: String): Boolean {
         return password.length > 5
+    }
+
+    fun keyDataChanged(key: String) {
+        _loginKeyForm.value = LoginKeyFormState(isDataValid = true)
     }
 }

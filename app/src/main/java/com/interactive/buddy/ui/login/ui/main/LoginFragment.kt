@@ -50,7 +50,9 @@ class LoginFragment : Fragment() {
         val root = binding.root
 
         val login: Button = binding.login
+        val loginKey: Button = binding.loginKey
         val username: TextInputEditText = binding.emailLogin
+        val key: TextInputEditText = binding.keyLogin
         val password: TextInputEditText = binding.passwordLogin
         val loading: ProgressBar = binding.loading
 
@@ -68,6 +70,17 @@ class LoginFragment : Fragment() {
             }
             if (loginState.passwordError != null) {
                 password.error = getString(loginState.passwordError)
+            }
+        })
+
+        loginViewModel.loginKeyFormState.observe(this.viewLifecycleOwner, Observer {
+            val loginKeyState = it ?: return@Observer
+
+            // disable login button unless both username / password is valid
+            loginKey.isEnabled = loginKeyState.isDataValid
+
+            if (loginKeyState.keyError != null) {
+                username.error = getString(loginKeyState.keyError)
             }
         })
 
@@ -90,6 +103,18 @@ class LoginFragment : Fragment() {
                 password.text.toString()
             )
         }
+
+
+        key.afterTextChanged {
+            loginViewModel.keyDataChanged(
+                key.text.toString()
+            )
+        }
+        loginKey.setOnClickListener {
+            loading.visibility = View.VISIBLE
+            loginViewModel.loginKey(key.text.toString(), fragment.requireContext())
+        }
+
 
         password.apply {
             afterTextChanged {
@@ -149,7 +174,6 @@ class LoginFragment : Fragment() {
     private fun updateUiWithUser(model: LoggedInUserView) {
         val welcome = getString(R.string.welcome)
         val displayName = model.username
-        // TODO : initiate successful logged in experience
         Toast.makeText(
             this.context,
             "$welcome $displayName",

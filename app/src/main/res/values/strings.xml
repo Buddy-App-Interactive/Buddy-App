@@ -15,6 +15,7 @@
     <string name="invalid_email">Not a valid email</string>
     <string name="invalid_username">Username must be set</string>
     <string name="invalid_password">Password must be >5 characters</string>
+    <string name="invalid_repeat_password">Passwords do not match</string>
     <string name="login_failed">"Login failed"</string>
     <string name="register_failed">"Login failed"</string>
     <string name="key_how_work">How does it work?</string>
@@ -28,6 +29,8 @@
     <string name="terms_conditions">Terms and Conditions</string>
     <string name="register_key_title">Register anonymously</string>
     <string name="title_activity_request_fragment">RequestFragment</string>
+    <string name="copy_key_message">Please Store this key you need it in thee future to login</string>
+    <string name="copy">Copy key and continue</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>

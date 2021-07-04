@@ -15,7 +15,7 @@ class SharedPrefManager private constructor(private var mCtx: Context) {
         editor.putString(KEY_ID, user.userId)
         editor.putString(KEY_USERNAME, user.username)
         editor.putString(KEY_EMAIL, user.email)
-        editor.putString(KEY_EMAIL, user.email)
+        editor.putString(KEY_KEY, user.key)
         editor.putString(KEY_JWT, user.jwt)
         editor.apply()
     }
@@ -35,7 +35,8 @@ class SharedPrefManager private constructor(private var mCtx: Context) {
             return LoggedInUser(
                 sharedPreferences.getString(KEY_ID, null)!!,
                 sharedPreferences.getString(KEY_USERNAME, null)!!,
-                sharedPreferences.getString(KEY_EMAIL, null)!!,
+                sharedPreferences.getString(KEY_EMAIL, null),
+                sharedPreferences.getString(KEY_KEY, null),
                 sharedPreferences.getString(KEY_JWT, null)!!
             )
         }
@@ -56,6 +57,7 @@ class SharedPrefManager private constructor(private var mCtx: Context) {
         private const val SHARED_PREF_NAME = "buddysharedpref"
         private const val KEY_USERNAME = "keyusername"
         private const val KEY_EMAIL = "keyemail"
+        private const val KEY_KEY = "keykey"
         private const val KEY_ID = "keyid"
         private const val KEY_JWT = "keyjwt"
 

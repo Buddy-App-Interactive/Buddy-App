@@ -1,27 +1,28 @@
 package com.interactive.buddy.ui.login.ui.main
 
+import android.content.*
+import android.content.Context.CLIPBOARD_SERVICE
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputEditText
 import com.interactive.buddy.R
+import com.interactive.buddy.data.SharedPrefManager
 import com.interactive.buddy.databinding.FragmentRegisterBinding
 import com.interactive.buddy.ui.login.LoggedInUserView
-import com.interactive.buddy.ui.login.LoginViewModel
 import com.interactive.buddy.ui.login.LoginViewModelFactory
 import com.interactive.buddy.ui.login.RegisterViewModel
+
 
 class RegisterFragment : Fragment() {
 
@@ -55,7 +56,7 @@ class RegisterFragment : Fragment() {
         val password: TextInputEditText = binding.passwordRegister
         val passwordRepeat: TextInputEditText = binding.passwordRepeatRegister
         val username: TextInputEditText = binding.usernameRegister
-        val usernameKey: TextInputEditText = binding.usernameRegister
+        val usernameKey: TextInputEditText = binding.usernameRegisterKey
         val loading: ProgressBar = binding.loading
 
         registerViewModel = ViewModelProvider(this, LoginViewModelFactory())
@@ -65,7 +66,6 @@ class RegisterFragment : Fragment() {
             val registerState = it ?: return@Observer
 
             register.isEnabled = registerState.isDataValid
-            registerKey.isEnabled = registerState.isDataValid
 
             if (registerState.usernameError != null) {
                 username.error = getString(registerState.usernameError)
@@ -79,6 +79,13 @@ class RegisterFragment : Fragment() {
             if (registerState.emailError != null) {
                 email.error = getString(registerState.emailError)
             }
+        })
+
+        registerViewModel.registerKeyFormState.observe(this.viewLifecycleOwner, Observer {
+            val registerState = it ?: return@Observer
+
+            registerKey.isEnabled = registerState.isDataValid
+
             if (registerState.usernameKeyError != null) {
                 usernameKey.error = getString(registerState.usernameKeyError)
             }
@@ -104,6 +111,18 @@ class RegisterFragment : Fragment() {
                 password.text.toString(),
                 passwordRepeat.text.toString()
             )
+        }
+
+        usernameKey.afterTextChanged {
+            registerViewModel.loginKeyDataChanged(
+                usernameKey.text.toString()
+            )
+        }
+
+
+        registerKey.setOnClickListener {
+            loading.visibility = View.VISIBLE
+            registerViewModel.registerKey(usernameKey.text.toString(), fragment.requireContext())
         }
 
         password.apply {
@@ -133,13 +152,6 @@ class RegisterFragment : Fragment() {
                 loading.visibility = View.VISIBLE
                 registerViewModel.register(username.text.toString(), email.text.toString(), password.text.toString(), fragment.requireContext())
             }
-
-            registerKey.setOnClickListener {
-                //Here for with Key
-                loading.visibility = View.VISIBLE
-                registerViewModel.registerKey(username.text.toString(), fragment.requireContext())
-            }
-
             return root
         }
     }
@@ -173,12 +185,36 @@ class RegisterFragment : Fragment() {
     private fun updateUiWithUser(model: LoggedInUserView) {
         val welcome = getString(R.string.welcome)
         val displayName = model.username
-        // TODO : initiate successful logged in experience
         Toast.makeText(
             this.context,
             "$welcome $displayName",
             Toast.LENGTH_LONG
         ).show()
+
+        val key = SharedPrefManager.getInstance(this.requireContext()).user.key
+        if(key != null){
+            val builder: AlertDialog.Builder = AlertDialog.Builder(this.requireContext(), R.style.DialogDarkTheme)
+            builder.setMessage(R.string.copy_key_message)
+            builder.setPositiveButton(
+                R.string.copy
+            ) { dialog, id ->
+                val myClipboard: ClipboardManager? = this.requireContext()
+                    .getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
+                val myClip: ClipData = ClipData.newPlainText("key", key)
+                myClipboard!!.setPrimaryClip(myClip)
+                dialog.cancel()
+                val myIntent = Intent(this.requireContext(), NavigationActivity::class.java)
+                this.startActivity(myIntent)
+            }
+
+
+            val alert: AlertDialog = builder.create()
+            alert.show()
+        }
+        else{
+            val myIntent = Intent(this.requireContext(), NavigationActivity::class.java)
+            this.startActivity(myIntent)
+        }
     }
 
     private fun showRegisterFailed(@StringRes errorString: Int) {

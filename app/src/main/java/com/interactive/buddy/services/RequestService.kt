@@ -21,7 +21,10 @@ class RequestService {
         this.ctx = ctx;
     }
 
-    fun getOwnRequests(successCallback: (List<Request>) -> Unit, errorCallback: () -> Unit) {
+    fun getRequests(successCallback: (List<Request>) -> Unit, errorCallback: () -> Unit, isOwn: Boolean = false) {
+        var url = URLs.URL_REQUESTS;
+        if(isOwn) url = URLs.URL_OWN_REQUESTS;
+
         val stringRequest: StringRequest = object : StringRequest(
             Method.GET, URLs.URL_REQUESTS,
             { response ->

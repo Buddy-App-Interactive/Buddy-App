@@ -13,7 +13,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.interactive.buddy.R
-import com.interactive.buddy.data.RequestStore
 import com.interactive.buddy.services.RequestService
 import com.interactive.buddy.ui.login.requests.ListItems.OpenRequestsListAdapter
 import com.interactive.buddy.ui.login.requests.ListItems.YourRequestsListAdapter
@@ -71,22 +70,29 @@ class RequestFragment : Fragment(), View.OnClickListener {
             btnMyRequests.visibility = View.INVISIBLE;
 
             // Fetch requests.
-            requestService.getOwnRequests({ requests ->
+            requestService.getRequests({ requests ->
                 val requestListAdapter = YourRequestsListAdapter(this.requireContext(), requests)
                 lvRequests.adapter = requestListAdapter;
-            }
-            ) {
+            },
+            {
                 // TODO: handle or whatever
-            }
+            })
 
             ((requireActivity() as NavigationActivity).supportActionBar)!!.title = "Open requests"
         }
-        /*
+
         else {
-            val requestListAdapter = OpenRequestsListAdapter(this.requireContext(), RequestStore.getRequests())
-            lvRequests.adapter = requestListAdapter;
+            // Fetch requests.
+            requestService.getRequests({ requests ->
+                val requestListAdapter = OpenRequestsListAdapter(this.requireContext(), requests)
+                lvRequests.adapter = requestListAdapter;
+            },
+            {
+                // TODO: handle or whatever
+            }, true)
+
             ((requireActivity() as NavigationActivity).supportActionBar)!!.title = "My requests"
-        }*/
+        }
 
         btnMyRequests.setOnClickListener(this);
         fabCreateRequest.setOnClickListener(this)

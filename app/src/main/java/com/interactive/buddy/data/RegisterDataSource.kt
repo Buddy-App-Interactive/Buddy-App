@@ -29,6 +29,7 @@ class RegisterDataSource {
                         userJson.getString("id"),
                         userJson.getString("username"),
                         userJson.getString("email"),
+                        null,
                         userJson.getString("jwt")
                     )
                     SharedPrefManager.getInstance(context).userLogin(user)
@@ -63,6 +64,7 @@ class RegisterDataSource {
                         userJson.getString("id"),
                         userJson.getString("username"),
                         userJson.getString("email"),
+                        userJson.getString("loginKey"),
                         userJson.getString("jwt"),
                     )
                     SharedPrefManager.getInstance(context).userLogin(user)
@@ -74,7 +76,6 @@ class RegisterDataSource {
                 override fun getParams(): Map<String, String> {
                     val params: MutableMap<String, String> = HashMap()
                     params["username"] = username
-                    params["key"] = UUID.randomUUID().toString();
                     return params
                 }
             }

@@ -28,7 +28,7 @@ class YourRequestsListAdapter(private var c: Context, private var requests: List
         val current = this.getItem(i) as Request
 
         tvLimit.text = current.limit.toString()
-        tvType.text = current.requestType.toString()
+        tvType.text = current.type.toString()
 
         //handle itemclicks for the ListView
         //view.setOnClickListener { Toast.makeText(c, current.id.toString(), Toast.LENGTH_SHORT).show() }

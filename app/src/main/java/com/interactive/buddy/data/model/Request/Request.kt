@@ -5,8 +5,9 @@ import java.util.*
 
 data class Request(
     val id : UUID,
-    val CreatorName: String,
+    val id_creator: UUID,
+    val description: String,
+    val type: RequestType,
     val limit: Int,
-    val requestType: RequestType,
-    val TimeStamp: LocalDateTime,
+    val timeframe: LocalDateTime,
 )

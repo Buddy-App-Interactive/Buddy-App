@@ -26,8 +26,9 @@ class LoginDataSource {
                     val user = LoggedInUser(
                         userJson.getString("id"),
                         userJson.getString("username"),
-                        userJson.getString("email")
-                    )
+                        userJson.getString("email"),
+                        userJson.getString("jwt")
+                        )
                     SharedPrefManager.getInstance(context).userLogin(user)
                     callback.onSuccess(user);
                 },

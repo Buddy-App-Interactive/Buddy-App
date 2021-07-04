@@ -14,9 +14,9 @@ import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.interactive.buddy.R
 import com.interactive.buddy.data.RequestStore
+import com.interactive.buddy.services.RequestService
 import com.interactive.buddy.ui.login.requests.ListItems.OpenRequestsListAdapter
 import com.interactive.buddy.ui.login.requests.ListItems.YourRequestsListAdapter
-import com.interactive.buddy.ui.login.requests.ListItems.YourRequestsListItem
 import com.interactive.buddy.ui.login.ui.main.NavigationActivity
 import com.interactive.buddy.ui.request.NewRequestFragment
 
@@ -38,6 +38,8 @@ class RequestFragment : Fragment(), View.OnClickListener {
     private lateinit var btnMyRequests: Button;
     private lateinit var lvRequests: ListView
 
+    private lateinit var requestService : RequestService
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -49,6 +51,8 @@ class RequestFragment : Fragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        requestService = RequestService(requireContext());
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_request, container, false)
     }
@@ -66,19 +70,28 @@ class RequestFragment : Fragment(), View.OnClickListener {
         if(!isOpenRequests) {
             btnMyRequests.visibility = View.INVISIBLE;
 
-            val requestListAdapter = YourRequestsListAdapter(this.requireContext(), RequestStore.getRequests())
-            lvRequests.adapter = requestListAdapter;
+            // Fetch requests.
+            requestService.getOwnRequests({ requests ->
+                val requestListAdapter = YourRequestsListAdapter(this.requireContext(), requests)
+                lvRequests.adapter = requestListAdapter;
+            }
+            ) {
+                // TODO: handle or whatever
+            }
 
             ((requireActivity() as NavigationActivity).supportActionBar)!!.title = "Open requests"
         }
+        /*
         else {
             val requestListAdapter = OpenRequestsListAdapter(this.requireContext(), RequestStore.getRequests())
             lvRequests.adapter = requestListAdapter;
             ((requireActivity() as NavigationActivity).supportActionBar)!!.title = "My requests"
-        }
+        }*/
 
         btnMyRequests.setOnClickListener(this);
         fabCreateRequest.setOnClickListener(this)
+
+
     }
 
     companion object {

@@ -28,9 +28,9 @@ class OpenRequestsListAdapter(private var c: Context, private var requests: List
 
         val current = this.getItem(i) as Request
 
-        tvCreator.text = current.CreatorName
-        tvType.text = current.requestType.toString()
-        tvTimeStamp.text = current.TimeStamp.toString()
+        tvCreator.text = current.description
+        tvType.text = current.type.toString()
+        tvTimeStamp.text = current.id_creator.toString()
 
         //handle itemclicks for the ListView
         //view.setOnClickListener { Toast.makeText(c, current.id.toString(), Toast.LENGTH_SHORT).show() }

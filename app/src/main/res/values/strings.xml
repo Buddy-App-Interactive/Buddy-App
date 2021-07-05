@@ -60,7 +60,7 @@
     <string name="btn_save_profile">Save profile</string>
     <string name="btn_save_password">Save password</string>
     <string name="editTextHint_limit">Limit</string>
-    <string name="editTextHint_addInformation">Additional Information</string>
+    <string name="editTextHint_description">Description</string>
     <string name="editTextHint_languages">Languages</string>
     <string name="btn_create_request">Create Request</string>
     <string name="btn_save_language">Save language</string>

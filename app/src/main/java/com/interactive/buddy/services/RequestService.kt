@@ -38,7 +38,7 @@ class RequestService {
         ) {
             override fun getHeaders(): Map<String, String>? {
                 val params: MutableMap<String, String> = HashMap()
-                params["Authorization"] = jwt
+                params["Authorization"] = "Bearer $jwt"
                 return params
             }}
         queue.add(stringRequest)

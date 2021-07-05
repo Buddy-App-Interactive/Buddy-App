@@ -35,7 +35,7 @@ class ChatListAdapter() : RecyclerView.Adapter<ChatViewHolder<*>>() {
 
     override fun getItemViewType(position: Int): Int = data[position].chatType
 
-    fun submitNewData(it: MutableList<ChatItemUi>) {
+    fun submitNewData(it: List<ChatItemUi>) {
             data.clear()
             data.addAll(it)
             notifyDataSetChanged()

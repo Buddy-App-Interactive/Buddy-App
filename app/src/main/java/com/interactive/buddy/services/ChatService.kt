@@ -1,14 +1,15 @@
 package com.interactive.buddy.services
 
 import android.content.Context
+import android.util.Log
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.interactive.buddy.data.SharedPrefManager
 import com.interactive.buddy.data.URLs
 import com.interactive.buddy.data.model.Chat
-import com.interactive.buddy.data.model.request.Request
 
 
 class ChatService {
@@ -22,21 +23,23 @@ class ChatService {
         this.ctx = ctx;
     }
 
-    fun getChats(successCallback: (List<Request>) -> Unit, errorCallback: () -> Unit) {
+    fun getChats(successCallback: (MutableList<Chat>) -> Unit, errorCallback: (Exception) -> Unit) {
         val stringRequest: StringRequest = object : StringRequest(
             Method.GET, URLs.URL_CHATS,
             { response ->
-                val requests = Gson().fromJson<List<Request>>(response, listOf<Chat>()::class.java);
-                successCallback.invoke(requests)
+                val type = object : TypeToken<List<Chat>>() {}.type
+                val chats = Gson().fromJson<MutableList<Chat>>(response,type)
+                successCallback.invoke(chats)
             },
             { error ->
+                Log.d("NETWORKERROR:", error.toString())
                 errorCallback.apply { error }
-                errorCallback.invoke()
+                errorCallback.invoke(error)
             },
         ) {
             override fun getHeaders(): Map<String, String>? {
                 val params: MutableMap<String, String> = HashMap()
-                params["Authorization"] = jwt
+                params["Authorization"] = "Bearer $jwt"
                 return params
             }}
         queue.add(stringRequest)

@@ -8,6 +8,6 @@ class NormalViewHolder(val view: View) : ChatViewHolder<ChatItemUi>(view) {
     private val content = view.findViewById<TextView>(R.id.chat_username)
 
     override fun bind(item: ChatItemUi) {
-        content.text = item.content
+        content.text = item.username
     }
 }

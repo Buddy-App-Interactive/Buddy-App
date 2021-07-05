@@ -1,7 +1,6 @@
 package com.interactive.buddy.ui.chatList.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,16 +9,20 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.interactive.buddy.R
+import com.interactive.buddy.services.ChatService
 import com.interactive.buddy.ui.chatList.ChatListAdapter
 
 
 class ChatListFragment : Fragment() {
     private lateinit var viewModel: ChatListViewModel
     private var chatListAdapter: ChatListAdapter = ChatListAdapter()
+    private lateinit var chatService: ChatService;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(ChatListViewModel::class.java)
+        chatService = ChatService(requireContext());
+        viewModel.setService(chatService)
     }
 
     override fun onCreateView(
@@ -28,7 +31,6 @@ class ChatListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view: View = inflater.inflate(R.layout.fragment_chat_list, container, false)
-
         val chatsRecyclerView: RecyclerView = view.findViewById(R.id.chatsRecyclerView)
         chatsRecyclerView.adapter = chatListAdapter
         chatsRecyclerView.layoutManager = LinearLayoutManager(context)

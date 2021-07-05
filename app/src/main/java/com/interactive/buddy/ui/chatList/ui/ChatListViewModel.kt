@@ -1,26 +1,38 @@
 package com.interactive.buddy.ui.chatList.ui
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.interactive.buddy.data.model.Mood
+import com.interactive.buddy.services.ChatService
 import com.interactive.buddy.ui.chatList.ChatItemUi
 import com.interactive.buddy.ui.chatList.ChatItemUi.Companion.TYPE_NORMAL_CHAT
+import com.interactive.buddy.ui.request.ListItems.YourRequestsListAdapter
 
 class ChatListViewModel : ViewModel() {
-    val chats: MutableLiveData<MutableList<ChatItemUi>> =  MutableLiveData();
+    val chats: MutableLiveData<List<ChatItemUi>> =  MutableLiveData();
+    var chatService: ChatService? = null;
 
-    fun getChats(): LiveData<MutableList<ChatItemUi>> {
-        loadChats()
+    fun getChats(): LiveData<List<ChatItemUi>> {
         return chats
     }
 
     private fun loadChats() {
-        chats.postValue(mutableListOf(ChatItemUi(
-            "test123",
-            TYPE_NORMAL_CHAT
-        ),ChatItemUi(
-            "aaaaa",
-            TYPE_NORMAL_CHAT
-        )))
+        // Fetch requests.
+        chatService!!.getChats({ ch ->
+            val temp: MutableList<ChatItemUi> = mutableListOf()
+            ch.forEach(){
+                //TODO: CHANGE THIS to correct types
+                temp.add(ChatItemUi(username = it.username, mood = Mood.HAPPY, TYPE_NORMAL_CHAT))
+            }
+            chats.postValue(temp);
+        }, { err ->
+            Log.d("frosch", err.message!! ) })
+    }
+
+    fun setService(chatService: ChatService) {
+        this.chatService = chatService
+        loadChats()
     }
 }

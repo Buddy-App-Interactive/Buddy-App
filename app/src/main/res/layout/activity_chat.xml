@@ -53,16 +53,17 @@
         <ImageButton
             android:id="@+id/imageButton"
             android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="12dp"
             android:backgroundTint="@android:color/transparent"
+            android:onClick="onSendClick"
             android:scaleType="fitXY"
             android:tintMode="multiply"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@android:drawable/ic_menu_send"
-            app:tint="@color/primary"
-            android:layout_height="50dp"/>
+            app:tint="@color/primary" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

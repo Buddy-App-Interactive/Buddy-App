@@ -1,6 +1,8 @@
 package com.interactive.buddy.ui.chat.ui
 
 import android.os.Bundle
+import android.view.View
+import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,5 +41,9 @@ class ChatActivity : AppCompatActivity() {
             }
         })
         
+    }
+
+    fun onSendClick(view: View){
+        viewModel.sendMessage(findViewById<EditText>(R.id.editTextMessage).text.toString())
     }
 }

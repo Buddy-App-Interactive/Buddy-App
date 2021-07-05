@@ -9,7 +9,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.interactive.buddy.data.SharedPrefManager
 import com.interactive.buddy.data.URLs
-import com.interactive.buddy.data.model.Chat
 import com.interactive.buddy.data.model.Message
 
 
@@ -46,6 +45,27 @@ class MessageService {
                 val params: MutableMap<String, String> = HashMap()
                 params["Authorization"] = "Bearer $jwt"
                 params["chat_id"] = chat_id
+                return params
+            }
+        }
+        queue.add(stringRequest)
+    }
+
+    fun sendMessage(chat_id: String, content: String ,successCallback: () -> Unit, errorCallback: (Exception) -> Unit) {
+        val stringRequest: StringRequest = object : StringRequest(
+            Method.POST, URLs.URL_SEND_MESSAGE,
+            { response ->
+            },
+            { error ->
+                errorCallback.apply { error }
+                errorCallback.invoke(error)
+            },
+        ) {
+            override fun getHeaders(): Map<String, String>? {
+                val params: MutableMap<String, String> = HashMap()
+                params["Authorization"] = "Bearer $jwt"
+                params["chat_id"] = chat_id
+                params["content"] = content
                 return params
             }
         }

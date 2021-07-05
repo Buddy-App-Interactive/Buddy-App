@@ -19,6 +19,10 @@ class ChatViewModel : ViewModel() {
         return messages
     }
 
+    public fun sendMessage(content: String){
+        messageService!!.sendMessage(this.chatId,content,{},{})
+    }
+
     private fun loadMessages() {
         messageService!!.getMessages(chatId, { msg ->
             val temp: MutableList<MessageItemUi> = mutableListOf()

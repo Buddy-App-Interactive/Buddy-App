@@ -178,6 +178,8 @@ class LoginFragment : Fragment() {
             Toast.LENGTH_LONG
         ).show()
 
+
+
         val myIntent = Intent(this.requireContext(), NavigationActivity::class.java)
         this.startActivity(myIntent)
     }

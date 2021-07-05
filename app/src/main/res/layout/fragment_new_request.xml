@@ -12,45 +12,69 @@
         android:id="@+id/spType"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
         android:layout_marginLeft="20dp"/>
 
-    <EditText
-        android:id="@+id/editLimit"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editDescriptionLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/spType"
-        android:layout_marginTop="5dp"
+        android:hint="@string/editTextHint_description"
+        android:layout_below="@id/spType"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="100dp">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editLimitLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editDescriptionLayout"
+        android:layout_marginTop="10dp"
         android:hint="@string/editTextHint_limit"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="100dp"/>
+        android:layout_marginRight="100dp">
 
-    <EditText
-        android:id="@+id/editAdditionalInformation"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editLimit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editLanguagesLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/editTextHint_addInformation"
-        android:layout_below="@id/editLimit"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="100dp"
-        />
-
-    <EditText
-        android:id="@+id/editLanguages"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editAdditionalInformation"
+        android:layout_below="@+id/editLimitLayout"
         android:hint="@string/editTextHint_languages"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="100dp"/>
+        android:layout_marginRight="100dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editLanguages"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnCreateRequest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btn_create_request"
-        android:layout_below="@id/editLanguages"
+        android:layout_below="@id/editLanguagesLayout"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@color/primary"
+        android:textColor="@color/white"
         />
-
 </RelativeLayout>

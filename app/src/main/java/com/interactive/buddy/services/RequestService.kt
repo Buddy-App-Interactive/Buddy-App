@@ -38,9 +38,38 @@ class RequestService {
         ) {
             override fun getHeaders(): Map<String, String>? {
                 val params: MutableMap<String, String> = HashMap()
-                params["Authorization"] = "Bearer$jwt"
+                params["Authorization"] = "Bearer $jwt"
                 return params
             }}
+        queue.add(stringRequest)
+    }
+
+    fun createRequest(successCallback: (Request) -> Unit, errorCallback: () -> Unit, request: Request) {
+        var url = URLs.URL_REQUESTS;
+
+        val stringRequest: StringRequest = object : StringRequest(
+            Method.POST, URLs.URL_REQUESTS,
+            { response ->
+                val createdRequest = Gson().fromJson(response, Request::class.java);
+                successCallback.invoke(createdRequest)
+            },
+            { error ->
+                errorCallback.apply { error }
+                errorCallback.invoke()
+            },
+        ) {
+            override fun getHeaders(): Map<String, String>? {
+                val params: MutableMap<String, String> = HashMap()
+                params["Authorization"] = "Bearer $jwt"
+                return params
+            }
+
+            override fun getParams(): MutableMap<String, String> {
+                val params: MutableMap<String, String> = HashMap()
+                params["request"] = Gson().toJson(request)
+                return params
+            }
+        }
         queue.add(stringRequest)
     }
 }

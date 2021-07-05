@@ -1,4 +1,4 @@
-package com.interactive.buddy.ui.login.ui.main.ui.notifications
+package com.interactive.buddy.ui.navigation.ui.notifications
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

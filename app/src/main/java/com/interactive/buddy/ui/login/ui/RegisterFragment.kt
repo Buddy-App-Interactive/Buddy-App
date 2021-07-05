@@ -1,4 +1,4 @@
-package com.interactive.buddy.ui.login.ui.main
+package com.interactive.buddy.ui.login.ui
 
 import android.content.*
 import android.content.Context.CLIPBOARD_SERVICE
@@ -22,6 +22,7 @@ import com.interactive.buddy.databinding.FragmentRegisterBinding
 import com.interactive.buddy.ui.login.LoggedInUserView
 import com.interactive.buddy.ui.login.LoginViewModelFactory
 import com.interactive.buddy.ui.login.RegisterViewModel
+import com.interactive.buddy.ui.navigation.NavigationActivity
 
 
 class RegisterFragment : Fragment() {

@@ -1,4 +1,4 @@
-package com.interactive.buddy.ui.login.ui.main
+package com.interactive.buddy.ui.login.ui
 
 import android.content.Context
 import androidx.fragment.app.Fragment

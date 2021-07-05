@@ -7,10 +7,11 @@ import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.interactive.buddy.data.SharedPrefManager
 import com.interactive.buddy.data.URLs
+import com.interactive.buddy.data.model.Chat
 import com.interactive.buddy.data.model.request.Request
 
 
-class RequestService {
+class ChatService {
     lateinit var jwt: String;
     lateinit var ctx: Context;
     lateinit var queue: RequestQueue;
@@ -21,14 +22,11 @@ class RequestService {
         this.ctx = ctx;
     }
 
-    fun getRequests(successCallback: (List<Request>) -> Unit, errorCallback: () -> Unit, isOwn: Boolean = false) {
-        var url = URLs.URL_REQUESTS;
-        if(isOwn) url = URLs.URL_OWN_REQUESTS;
-
+    fun getChats(successCallback: (List<Request>) -> Unit, errorCallback: () -> Unit) {
         val stringRequest: StringRequest = object : StringRequest(
-            Method.GET, URLs.URL_REQUESTS,
+            Method.GET, URLs.URL_CHATS,
             { response ->
-                val requests = Gson().fromJson<List<Request>>(response, listOf<Request>()::class.java);
+                val requests = Gson().fromJson<List<Request>>(response, listOf<Chat>()::class.java);
                 successCallback.invoke(requests)
             },
             { error ->

@@ -1,4 +1,4 @@
-package com.interactive.buddy.ui.login.ui.main
+package com.interactive.buddy.ui.login.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

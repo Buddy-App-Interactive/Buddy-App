@@ -1,4 +1,4 @@
-package com.interactive.buddy.ui.login.requests
+package com.interactive.buddy.ui.request
 
 import android.os.Build
 import android.os.Bundle
@@ -14,10 +14,9 @@ import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.interactive.buddy.R
 import com.interactive.buddy.services.RequestService
-import com.interactive.buddy.ui.login.requests.ListItems.OpenRequestsListAdapter
-import com.interactive.buddy.ui.login.requests.ListItems.YourRequestsListAdapter
-import com.interactive.buddy.ui.login.ui.main.NavigationActivity
-import com.interactive.buddy.ui.request.NewRequestFragment
+import com.interactive.buddy.ui.request.ListItems.OpenRequestsListAdapter
+import com.interactive.buddy.ui.request.ListItems.YourRequestsListAdapter
+import com.interactive.buddy.ui.navigation.NavigationActivity
 
 
 // TODO: Rename parameter arguments, choose names that match

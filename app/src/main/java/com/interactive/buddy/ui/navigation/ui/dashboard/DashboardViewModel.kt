@@ -1,4 +1,4 @@
-package com.interactive.buddy.ui.login.ui.main.ui.dashboard
+package com.interactive.buddy.ui.navigation.ui.dashboard
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

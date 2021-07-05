@@ -1,4 +1,4 @@
-package com.interactive.buddy.ui.login.requests.ListItems
+package com.interactive.buddy.ui.request.ListItems
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

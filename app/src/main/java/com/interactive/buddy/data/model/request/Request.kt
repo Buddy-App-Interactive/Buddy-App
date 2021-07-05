@@ -1,4 +1,4 @@
-package com.interactive.buddy.data.model.Request
+package com.interactive.buddy.data.model.request
 
 import java.time.LocalDateTime
 import java.util.*

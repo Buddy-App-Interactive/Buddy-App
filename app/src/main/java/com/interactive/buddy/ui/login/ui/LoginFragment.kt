@@ -1,4 +1,4 @@
-package com.interactive.buddy.ui.login.ui.main
+package com.interactive.buddy.ui.login.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -22,6 +22,7 @@ import com.interactive.buddy.databinding.FragmentLoginBinding
 import com.interactive.buddy.ui.login.LoggedInUserView
 import com.interactive.buddy.ui.login.LoginViewModel
 import com.interactive.buddy.ui.login.LoginViewModelFactory
+import com.interactive.buddy.ui.navigation.NavigationActivity
 
 class LoginFragment : Fragment() {
 
@@ -29,9 +30,6 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private lateinit var loginViewModel: LoginViewModel
     private var fragment = this;
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {

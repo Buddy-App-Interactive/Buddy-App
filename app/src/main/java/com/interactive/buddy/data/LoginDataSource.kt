@@ -57,8 +57,6 @@ class LoginDataSource {
                 { response ->
                     val userJson = JSONObject(response)
 
-                    Log.d("jaaaa", response)
-
                     val user = LoggedInUser(
                         userJson.getString("id"),
                         userJson.getString("username"),

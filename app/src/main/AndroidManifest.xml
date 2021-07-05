@@ -13,10 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Buddy"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.chat.ui.ChatActivity"></activity>
+        <activity android:name=".ui.chat.ui.ChatActivity" />
         <activity
-            android:name=".ui.login.ui.main.NavigationActivity"
-            android:label="@string/title_activity_navigation"></activity>
+            android:name=".ui.navigation.NavigationActivity"
+            android:label="@string/title_activity_navigation" />
         <activity
             android:name=".ui.login.LoginRegisterActivity"
             android:label="@string/title_activity_login_register"

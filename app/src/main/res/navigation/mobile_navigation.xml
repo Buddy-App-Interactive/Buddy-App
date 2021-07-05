@@ -7,24 +7,24 @@
 
     <fragment
         android:id="@+id/navigation_chats"
-        android:name="com.interactive.buddy.ui.login.ui.main.ui.home.HomeFragment"
+        android:name="com.interactive.buddy.ui.chatList.ui.ChatListFragment"
         android:label="@string/menu_chats"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_chat_list" />
 
     <fragment
         android:id="@+id/navigation_requests"
-        android:name="com.interactive.buddy.ui.login.requests.RequestFragment"
+        android:name="com.interactive.buddy.ui.request.RequestFragment"
         android:label="@string/menu_requests"
         tools:layout="@layout/fragment_request" />
 
     <fragment
         android:id="@+id/navigation_mood_selector"
-        android:name="com.interactive.buddy.ui.login.ui.main.ui.notifications.NotificationsFragment"
+        android:name="com.interactive.buddy.ui.navigation.ui.notifications.NotificationsFragment"
         android:label="@string/menu_mood_selector"
         tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/navigation_karma"
-        android:name="com.interactive.buddy.ui.login.ui.main.ui.notifications.NotificationsFragment"
+        android:name="com.interactive.buddy.ui.navigation.ui.notifications.NotificationsFragment"
         android:label="@string/menu_karma"
         tools:layout="@layout/fragment_notifications" />
     <fragment

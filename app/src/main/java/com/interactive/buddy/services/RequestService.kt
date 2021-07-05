@@ -7,7 +7,7 @@ import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.interactive.buddy.data.SharedPrefManager
 import com.interactive.buddy.data.URLs
-import com.interactive.buddy.data.model.Request.Request
+import com.interactive.buddy.data.model.request.Request
 
 
 class RequestService {

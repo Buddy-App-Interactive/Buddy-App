@@ -9,7 +9,7 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.interactive.buddy.R
-import com.interactive.buddy.data.model.Request.RequestType
+import com.interactive.buddy.data.model.request.RequestType
 
 class NewRequestFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSelectedListener {
     private lateinit var spType: Spinner

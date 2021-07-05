@@ -5,7 +5,7 @@ import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
 import com.interactive.buddy.databinding.ActivityLoginRegisterBinding
-import com.interactive.buddy.ui.login.ui.main.SectionsPagerAdapter
+import com.interactive.buddy.ui.login.ui.SectionsPagerAdapter
 
 class LoginRegisterActivity : AppCompatActivity() {
 

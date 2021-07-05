@@ -8,7 +8,6 @@ import com.interactive.buddy.data.interfaces.ServerListener
 import com.interactive.buddy.data.model.LoggedInUser
 import org.json.JSONObject
 import java.io.IOException
-import java.util.*
 import kotlin.collections.HashMap
 
 

@@ -34,6 +34,7 @@
 
     <!-- Strings used for Chat -->
     <string name="message_placeholder">Message…</string>
+    <string name="new_message">New Message!</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>

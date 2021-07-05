@@ -4,23 +4,39 @@ import android.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.interactive.buddy.services.MessageService
 import com.interactive.buddy.ui.chat.MessageItemUi
+import com.interactive.buddy.ui.chat.MessageItemUi.Companion.TYPE_PRIMARY_MESSAGE
+import com.interactive.buddy.ui.chat.MessageItemUi.Companion.TYPE_SECONDARY_MESSAGE
 
 class ChatViewModel : ViewModel() {
-    private val messages: MutableLiveData<MutableList<MessageItemUi>> by lazy {
-        MutableLiveData<MutableList<MessageItemUi>>().also {
-            loadMessages()
-        }
-    }
+    val messages: MutableLiveData<List<MessageItemUi>> =  MutableLiveData();
+    var messageService: MessageService? = null;
+    lateinit var userId: String;
+    lateinit var chatId: String;
 
-    fun getMessages(): LiveData<MutableList<MessageItemUi>> {
+    fun getMessages(): LiveData<List<MessageItemUi>> {
         return messages
     }
 
     private fun loadMessages() {
-        messages.value = arrayListOf(MessageItemUi(
-            "test123",
-            Color.WHITE,
-            MessageItemUi.TYPE_SECONDARY_MESSAGE))
+        messageService!!.getMessages(chatId, { msg ->
+            val temp: MutableList<MessageItemUi> = mutableListOf()
+            msg.forEach() {
+                if ((it.senderId==userId)) {
+                    temp.add(MessageItemUi(it.getMessageContent(), Color.WHITE, it.username,TYPE_PRIMARY_MESSAGE))
+                } else {
+                    temp.add(MessageItemUi(it.getMessageContent(), Color.WHITE, it.username,TYPE_SECONDARY_MESSAGE))
+                }
+            }
+            messages.postValue(temp);
+        }, { })
+    }
+
+    fun init(messageService: MessageService, userId: String, chatId: String) {
+        this.messageService = messageService
+        this.userId = userId
+        this.chatId = chatId
+        loadMessages()
     }
 }

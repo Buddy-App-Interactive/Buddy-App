@@ -1,6 +1,5 @@
 package com.interactive.buddy.ui.chatList
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,15 +8,30 @@ import androidx.recyclerview.widget.RecyclerView
 import com.interactive.buddy.R
 import com.interactive.buddy.ui.chatList.ChatItemUi.Companion.TYPE_NORMAL_CHAT
 
+
 class ChatListAdapter() : RecyclerView.Adapter<ChatViewHolder<*>>() {
     val data = mutableListOf<ChatItemUi>()
+
+    private var onItemClickListener: OnItemClickListener? = null
+
+    interface OnItemClickListener {
+        fun onItemClick(chatId: String)
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener){
+        onItemClickListener = listener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder<*> {
         val context = parent.context
         return when (viewType) {
             TYPE_NORMAL_CHAT -> {
                 val view = LayoutInflater.from(context).inflate(R.layout.chat_item, parent, false)
-                NormalChatViewHolder(view)
+                val viewholder: NormalChatViewHolder = NormalChatViewHolder(view)
+                view.setOnClickListener {
+                    onItemClickListener?.onItemClick(data.get(viewholder.adapterPosition)._id);
+                }
+                viewholder
             }
             else -> throw IllegalArgumentException("Invalid view type")
         }

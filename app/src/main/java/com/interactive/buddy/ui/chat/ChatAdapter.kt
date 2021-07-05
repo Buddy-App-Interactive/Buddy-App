@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.interactive.buddy.R
 import com.interactive.buddy.ui.chat.MessageItemUi.Companion.TYPE_PRIMARY_MESSAGE
 import com.interactive.buddy.ui.chat.MessageItemUi.Companion.TYPE_SECONDARY_MESSAGE
+import com.interactive.buddy.ui.chatList.ChatItemUi
 
-class ChatAdapter(var data: MutableList<MessageItemUi>) : RecyclerView.Adapter<MessageViewHolder<*>>() {
+class ChatAdapter() : RecyclerView.Adapter<MessageViewHolder<*>>() {
+    val data = mutableListOf<MessageItemUi>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder<*> {
         val context = parent.context
@@ -39,6 +41,12 @@ class ChatAdapter(var data: MutableList<MessageItemUi>) : RecyclerView.Adapter<M
     override fun getItemCount(): Int = data.size
 
     override fun getItemViewType(position: Int): Int = data[position].messageType
+
+    fun submitNewData(it: List<MessageItemUi>) {
+        data.clear()
+        data.addAll(it)
+        notifyDataSetChanged()
+    }
 
     class PrimaryMessageViewHolder(val view: View) : MessageViewHolder<MessageItemUi>(view) {
         private val messageContent = view.findViewById<TextView>(R.id.message)

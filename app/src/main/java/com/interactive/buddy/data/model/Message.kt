@@ -1,9 +1,13 @@
 package com.interactive.buddy.data.model
 
-import java.sql.Blob
+class Message constructor (
+    val _id: String,
+    val chatId: String,
+    val senderId: String,
+    val username : String,
+    private val content: String) {
 
-class Message constructor (val chatId: String,val fromId : String, private val content: Blob) {
     fun getMessageContent(): String{
-        return String(content.getBytes(0, content.length().toInt()))
+        return content
     }
 }

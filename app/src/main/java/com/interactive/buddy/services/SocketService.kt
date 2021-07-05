@@ -82,7 +82,8 @@ class SocketService : Service() {
 
         mSocket.emit(
             "storeClientInfo",
-            object {val customId: String = SharedPrefManager.getInstance(ctx).user.userId})
+            "{\"customId\":\"" +SharedPrefManager.getInstance(ctx).user.userId+ "\"}"
+        )
 
         val options = IO.Options()
         options.reconnection = true

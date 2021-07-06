@@ -82,4 +82,17 @@
         android:layout_below="@id/editLanguages"
         android:layout_marginLeft="20dp"
         />
+
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnSaveLanguage"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="121dp"
+        android:layout_marginTop="162dp"
+        android:layout_marginBottom="22dp"
+        android:layout_toEndOf="@+id/btnSaveLanguage"
+        android:onClick="logout"
+        android:text="Logout" />
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.interactive.buddy.ui.profile
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +11,8 @@ import android.widget.EditText
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.interactive.buddy.R
+import com.interactive.buddy.data.SharedPrefManager
+
 
 class ProfileFragment : Fragment(), View.OnClickListener {
     private lateinit var editUsername: EditText
@@ -56,5 +59,10 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         } else if (v!!.id == R.id.btnSaveLanguage) {
 
         }
+    }
+
+    fun logout(v: View){
+        SharedPrefManager.getInstance(this.requireContext()).logout()
+        this.activity?.finishAffinity();
     }
 }

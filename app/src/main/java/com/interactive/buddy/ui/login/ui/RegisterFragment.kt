@@ -17,6 +17,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputEditText
 import com.interactive.buddy.R
+import com.interactive.buddy.data.App
 import com.interactive.buddy.data.SharedPrefManager
 import com.interactive.buddy.databinding.FragmentRegisterBinding
 import com.interactive.buddy.ui.login.LoggedInUserView
@@ -204,6 +205,8 @@ class RegisterFragment : Fragment() {
                 val myClip: ClipData = ClipData.newPlainText("key", key)
                 myClipboard!!.setPrimaryClip(myClip)
                 dialog.cancel()
+                var app = App();
+                app.loginDone()
                 val myIntent = Intent(this.requireContext(), NavigationActivity::class.java)
                 this.startActivity(myIntent)
             }
@@ -213,6 +216,8 @@ class RegisterFragment : Fragment() {
             alert.show()
         }
         else{
+            var app = App();
+            app.loginDone()
             val myIntent = Intent(this.requireContext(), NavigationActivity::class.java)
             this.startActivity(myIntent)
         }

@@ -1,6 +1,7 @@
 package com.interactive.buddy.ui.chat.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import androidx.activity.viewModels
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.interactive.buddy.R
+import com.interactive.buddy.data.App
 import com.interactive.buddy.data.SharedPrefManager
 import com.interactive.buddy.databinding.ActivityChatBinding
 import com.interactive.buddy.services.MessageService
@@ -26,18 +28,32 @@ class ChatActivity : AppCompatActivity() {
         binding = ActivityChatBinding.inflate(layoutInflater)
 
         messageService = MessageService(this);
+        val chatId = intent.getStringExtra("chatId")!!
         val model: ChatViewModel by viewModels()
         viewModel = model
-        viewModel.init(messageService, SharedPrefManager.getInstance(this).user.userId, intent.getStringExtra("chatId")!!)
+        viewModel.init(messageService, SharedPrefManager.getInstance(this).user.userId, chatId)
 
+        App.currentChatId.postValue(chatId);
 
         val messageRecyclerView: RecyclerView = findViewById<RecyclerView>(R.id.messageRecyclerView)
         messageRecyclerView.adapter = chatAdapter
+        var layout = LinearLayoutManager(this)
+        layout.stackFromEnd = true
+        messageRecyclerView.layoutManager = layout
 
-        messageRecyclerView.layoutManager = LinearLayoutManager(this)
         viewModel.messages.observe(this, {
             it?.let {
                 chatAdapter.submitNewData(it)
+                messageRecyclerView.scrollToPosition(it.size - 1);
+            }
+        })
+
+        App.messageCollector.observe(this, {
+            it?.let {
+                if(it) {
+                    viewModel.loadMessages()
+                    App.messageCollector.postValue(false)
+                }
             }
         })
         
@@ -45,5 +61,11 @@ class ChatActivity : AppCompatActivity() {
 
     fun onSendClick(view: View){
         viewModel.sendMessage(findViewById<EditText>(R.id.editTextMessage).text.toString())
+        viewModel.loadMessages()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        App.currentChatId.postValue("none")
     }
 }

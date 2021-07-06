@@ -10,4 +10,8 @@ class Message constructor (
     fun getMessageContent(): String{
         return content
     }
+
+    override fun toString(): String {
+        return "Message(_id='$_id', chatId='$chatId', senderId='$senderId', username='$username', content='$content')"
+    }
 }

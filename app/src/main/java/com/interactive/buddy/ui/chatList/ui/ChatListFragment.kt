@@ -32,10 +32,11 @@ class ChatListFragment : Fragment() {
         fragment = this;
 
         chatListAdapter.setOnItemClickListener(object : OnItemClickListener {
-            override fun onItemClick(chatId: String, username: String) {
+            override fun onItemClick(chatId: String, username: String, moodResource: Int) {
                 val myIntent = Intent(fragment.requireContext(), ChatActivity::class.java)
                 myIntent.putExtra("chatId",chatId)
                 myIntent.putExtra("chatName",username)
+                myIntent.putExtra("moodResource", moodResource)
                 fragment.startActivity(myIntent)
             }
         })

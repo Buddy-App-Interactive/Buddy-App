@@ -3,9 +3,11 @@ package com.interactive.buddy.ui.chatList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.interactive.buddy.R
+import com.interactive.buddy.data.model.Mood
 import com.interactive.buddy.ui.chatList.ChatItemUi.Companion.TYPE_NORMAL_CHAT
 import java.time.format.DateTimeFormatter
 
@@ -16,7 +18,7 @@ class ChatListAdapter() : RecyclerView.Adapter<ChatViewHolder<*>>() {
     private var onItemClickListener: OnItemClickListener? = null
 
     interface OnItemClickListener {
-        fun onItemClick(chatId: String, username: String)
+        fun onItemClick(chatId: String, username: String, moodResource: Int)
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener){
@@ -32,7 +34,14 @@ class ChatListAdapter() : RecyclerView.Adapter<ChatViewHolder<*>>() {
                 view.setOnClickListener {
                     onItemClickListener?.onItemClick(
                         data[viewholder.adapterPosition]._id,
-                        data[viewholder.adapterPosition].username);
+                        data[viewholder.adapterPosition].username,
+                        when (data[viewholder.adapterPosition].mood) {
+                        Mood.HAPPY -> R.drawable.ic_smiley_happy
+                        Mood.OK -> R.drawable.ic_smiley_ok
+                        Mood.SAD -> R.drawable.ic_smiley_sad
+                    }
+                    )
+                    ;
                 }
                 viewholder
             }
@@ -62,11 +71,18 @@ class ChatListAdapter() : RecyclerView.Adapter<ChatViewHolder<*>>() {
         private val content = view.findViewById<TextView>(R.id.chat_username)
         private val lastMessage = view.findViewById<TextView>(R.id.lastMessageChatList)
         private val timeLastMessage = view.findViewById<TextView>(R.id.timeChatList)
+        private val imageMood = view.findViewById<ImageView>(R.id.moodImageChatList)
 
         override fun bind(item: ChatItemUi) {
             content.text = item.username
             lastMessage.text = item.lastMessage.getMessageContent()
             timeLastMessage.text = item.lastMessage.getCreatedDate().format(DateTimeFormatter.ofPattern("HH:mm"))
+
+            when (item.mood) {
+                Mood.HAPPY -> imageMood.setImageResource(R.drawable.ic_smiley_happy)
+                Mood.OK -> imageMood.setImageResource(R.drawable.ic_smiley_ok)
+                Mood.SAD -> imageMood.setImageResource(R.drawable.ic_smiley_sad)
+            }
         }
     }
 }

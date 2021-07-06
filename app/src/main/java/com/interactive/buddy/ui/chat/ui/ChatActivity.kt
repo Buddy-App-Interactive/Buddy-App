@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -33,6 +34,12 @@ class ChatActivity : AppCompatActivity() {
         messageService = MessageService(this);
         val chatId = intent.getStringExtra("chatId")!!
         val chatName = intent.getStringExtra("chatName")!!
+        findViewById<ImageView>(R.id.imageViewMoodChat).setImageResource(
+            intent.getIntExtra(
+                "moodResource",
+                R.drawable.ic_smiley_happy
+            )
+        )
         val model: ChatViewModel by viewModels()
         viewModel = model
         viewModel.init(messageService, SharedPrefManager.getInstance(this).user.userId, chatId)

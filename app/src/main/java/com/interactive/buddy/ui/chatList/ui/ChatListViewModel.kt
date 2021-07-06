@@ -23,8 +23,13 @@ class ChatListViewModel : ViewModel() {
         chatService!!.getChats({ ch ->
             val temp: MutableList<ChatItemUi> = mutableListOf()
             ch.forEach(){
-                //TODO: CHANGE THIS to correct types
-                temp.add(ChatItemUi(username = it.username, mood = Mood.HAPPY,_id = it._id,it.lastMessage, TYPE_NORMAL_CHAT))
+                var mood: Mood = Mood.HAPPY
+                when (it.mood) {
+                    1 -> mood = Mood.HAPPY
+                    2 -> mood = Mood.OK
+                    3 -> mood = Mood.SAD
+                }
+                temp.add(ChatItemUi(username = it.username, mood = mood,_id = it._id,it.lastMessage, TYPE_NORMAL_CHAT))
             }
             chats.postValue(temp);
         }, { })

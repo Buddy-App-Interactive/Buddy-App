@@ -2,6 +2,7 @@ package com.interactive.buddy.data
 
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.SharedPreferences
 import com.interactive.buddy.data.model.LoggedInUser
 import com.interactive.buddy.ui.login.LoginRegisterActivity
@@ -49,7 +50,7 @@ class SharedPrefManager private constructor(private var mCtx: Context) {
         val editor = sharedPreferences.edit()
         editor.clear()
         editor.apply()
-        mCtx.startActivity(Intent(mCtx, LoginRegisterActivity::class.java))
+        mCtx.startActivity(Intent(mCtx, LoginRegisterActivity::class.java).setFlags(FLAG_ACTIVITY_NEW_TASK))
     }
 
     companion object {

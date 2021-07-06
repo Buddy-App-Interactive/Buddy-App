@@ -23,6 +23,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private lateinit var btnChangePassword: Button
     private lateinit var editLanguages: EditText
     private lateinit var btnSaveLanguage: Button
+    private lateinit var btnLogout: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,10 +46,15 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         btnChangePassword = view.findViewById(R.id.btnChangePassword)
         editLanguages = view.findViewById(R.id.editLanguages)
         btnSaveLanguage = view.findViewById(R.id.btnSaveLanguage)
+        btnLogout = view.findViewById(R.id.logoutButton)
+
 
         btnSaveProfile.setOnClickListener(this)
         btnChangePassword.setOnClickListener(this)
         btnSaveLanguage.setOnClickListener(this)
+        btnLogout.setOnClickListener {
+            SharedPrefManager.getInstance(this.requireContext()).logout()
+        }
     }
 
     override fun onClick(v: View?) {
@@ -61,8 +67,4 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    fun logout(v: View){
-        SharedPrefManager.getInstance(this.requireContext()).logout()
-        this.activity?.finishAffinity();
-    }
 }

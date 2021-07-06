@@ -34,6 +34,7 @@ class MessageService {
                 }catch (ex:Exception){
                     ex.message?.let { Log.d("error", it) }
                 }
+                Log.d("aaa",messages.toString())
                 successCallback.invoke(messages)
             },
             { error ->
@@ -55,6 +56,8 @@ class MessageService {
         val stringRequest: StringRequest = object : StringRequest(
             Method.POST, URLs.URL_SEND_MESSAGE,
             { response ->
+                successCallback.apply {  }
+                successCallback.invoke()
             },
             { error ->
                 errorCallback.apply { error }
@@ -65,7 +68,7 @@ class MessageService {
                 val params: MutableMap<String, String> = HashMap()
                 params["Authorization"] = "Bearer $jwt"
                 params["chat_id"] = chat_id
-                params["content"] = content
+                params["content"] = Gson().toJson(content)
                 return params
             }
         }

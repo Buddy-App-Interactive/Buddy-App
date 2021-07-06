@@ -32,9 +32,10 @@ class ChatListFragment : Fragment() {
         fragment = this;
 
         chatListAdapter.setOnItemClickListener(object : OnItemClickListener {
-            override fun onItemClick(chatId: String) {
+            override fun onItemClick(chatId: String, username: String) {
                 val myIntent = Intent(fragment.requireContext(), ChatActivity::class.java)
                 myIntent.putExtra("chatId",chatId)
+                myIntent.putExtra("chatName",username)
                 fragment.startActivity(myIntent)
             }
         })
@@ -57,5 +58,10 @@ class ChatListFragment : Fragment() {
 
 
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadChats()
     }
 }

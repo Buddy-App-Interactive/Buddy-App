@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.interactive.buddy.R
 import com.interactive.buddy.ui.chatList.ChatItemUi.Companion.TYPE_NORMAL_CHAT
+import java.time.format.DateTimeFormatter
 
 
 class ChatListAdapter() : RecyclerView.Adapter<ChatViewHolder<*>>() {
@@ -15,7 +16,7 @@ class ChatListAdapter() : RecyclerView.Adapter<ChatViewHolder<*>>() {
     private var onItemClickListener: OnItemClickListener? = null
 
     interface OnItemClickListener {
-        fun onItemClick(chatId: String)
+        fun onItemClick(chatId: String, username: String)
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener){
@@ -27,9 +28,11 @@ class ChatListAdapter() : RecyclerView.Adapter<ChatViewHolder<*>>() {
         return when (viewType) {
             TYPE_NORMAL_CHAT -> {
                 val view = LayoutInflater.from(context).inflate(R.layout.chat_item, parent, false)
-                val viewholder: NormalChatViewHolder = NormalChatViewHolder(view)
+                val viewholder = NormalChatViewHolder(view)
                 view.setOnClickListener {
-                    onItemClickListener?.onItemClick(data.get(viewholder.adapterPosition)._id);
+                    onItemClickListener?.onItemClick(
+                        data[viewholder.adapterPosition]._id,
+                        data[viewholder.adapterPosition].username);
                 }
                 viewholder
             }
@@ -57,9 +60,13 @@ class ChatListAdapter() : RecyclerView.Adapter<ChatViewHolder<*>>() {
 
     class NormalChatViewHolder(val view: View) : ChatViewHolder<ChatItemUi>(view) {
         private val content = view.findViewById<TextView>(R.id.chat_username)
+        private val lastMessage = view.findViewById<TextView>(R.id.lastMessageChatList)
+        private val timeLastMessage = view.findViewById<TextView>(R.id.timeChatList)
 
         override fun bind(item: ChatItemUi) {
             content.text = item.username
+            lastMessage.text = item.lastMessage.getMessageContent()
+            timeLastMessage.text = item.lastMessage.getCreatedDate().format(DateTimeFormatter.ofPattern("HH:mm"))
         }
     }
 }

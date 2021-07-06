@@ -27,6 +27,8 @@
         <item name="background">@color/backgroundDark</item>
     </style>
 
+
+
     <style name="Widget.App.TextInputLayout" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.TextInputLayout</item>
         <item name="hintTextColor">?attr/colorOnSurface</item>
@@ -46,7 +48,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.Buddy.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.Buddy.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
+        <item name="android:background" tools:ignore="NewApi">@color/backgroundDark</item>
+        <item name="background">@color/backgroundDark</item>
+    </style>
 
     <style name="Theme.Buddy.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 

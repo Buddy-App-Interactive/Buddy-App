@@ -2,15 +2,79 @@
     <!-- Base application theme. -->
     <style name="Theme.Buddy" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryVariant">@color/white</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="android:windowBackground">@color/backgroundLight</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/secondary</item>
+        <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/white</item>
-        <item name="colorSecondaryVariant">@color/white</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">#E84545</item>
+        <item name="colorSecondaryVariant">#903749</item>
+        <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/backgroundDark</item>
         <!-- Customize your theme here. -->
+
+        <item name="android:actionBarStyle" tools:ignore="NewApi">@style/MyActionBar</item>
+        <item name="actionBarStyle">@style/MyActionBar</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
+        <item name="android:textColorHighlight">@color/secondary</item>
+    </style>
+
+    <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background" tools:ignore="NewApi">@color/backgroundDark</item>
+        <item name="background">@color/backgroundDark</item>
+    </style>
+
+
+
+    <style name="Widget.App.TextInputLayout" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.TextInputLayout</item>
+        <item name="hintTextColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="ThemeOverlay.App.TextInputLayout" parent="">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorError">@color/primary</item>
+
+        <item name="editTextStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox
+        </item>
+    </style>
+
+    <style name="Theme.Buddy.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Buddy.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
+        <item name="android:background" tools:ignore="NewApi">@color/backgroundDark</item>
+        <item name="background">@color/backgroundDark</item>
+    </style>
+
+    <style name="Theme.Buddy.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="DialogDarkTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <!-- Primary brand color. -->
+        <item name="android:windowBackground">@color/backgroundLight</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/secondary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item   name="android:windowContentOverlay">@null</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">#E84545</item>
+        <item name="colorSecondaryVariant">#903749</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/backgroundDark</item>
+        <!-- Customize your theme here. -->
+
+        <item name="android:actionBarStyle" tools:ignore="NewApi">@style/MyActionBar</item>
+        <item name="actionBarStyle">@style/MyActionBar</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
+        <item name="android:textColorHighlight">@color/secondary</item>
     </style>
 </resources>

@@ -1,9 +1,11 @@
 package com.interactive.buddy.ui.chat.ui
 
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,18 +26,23 @@ class ChatActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_chat)
         binding = ActivityChatBinding.inflate(layoutInflater)
 
         messageService = MessageService(this);
         val chatId = intent.getStringExtra("chatId")!!
+        val chatName = intent.getStringExtra("chatName")!!
         val model: ChatViewModel by viewModels()
         viewModel = model
         viewModel.init(messageService, SharedPrefManager.getInstance(this).user.userId, chatId)
 
         App.currentChatId.postValue(chatId);
 
-        val messageRecyclerView: RecyclerView = findViewById<RecyclerView>(R.id.messageRecyclerView)
+        val messageRecyclerView: RecyclerView = findViewById(R.id.messageRecyclerView)
+        val chatbar: TextView = findViewById(R.id.chatNameBar)
+        chatbar.text = chatName
+
         messageRecyclerView.adapter = chatAdapter
         var layout = LinearLayoutManager(this)
         layout.stackFromEnd = true
@@ -60,8 +67,16 @@ class ChatActivity : AppCompatActivity() {
     }
 
     fun onSendClick(view: View){
-        viewModel.sendMessage(findViewById<EditText>(R.id.editTextMessage).text.toString())
-        viewModel.loadMessages()
+        var tv: EditText = findViewById(R.id.editTextMessage)
+        viewModel.sendMessage(tv.text.toString())
+        tv.clearFocus()
+        tv.text.clear()
+        val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    fun onBackClick(view: View){
+        this.finish();
     }
 
     override fun onDestroy() {

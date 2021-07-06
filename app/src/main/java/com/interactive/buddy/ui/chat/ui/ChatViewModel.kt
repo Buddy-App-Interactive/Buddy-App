@@ -9,6 +9,8 @@ import com.interactive.buddy.services.MessageService
 import com.interactive.buddy.ui.chat.MessageItemUi
 import com.interactive.buddy.ui.chat.MessageItemUi.Companion.TYPE_PRIMARY_MESSAGE
 import com.interactive.buddy.ui.chat.MessageItemUi.Companion.TYPE_SECONDARY_MESSAGE
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class ChatViewModel : ViewModel() {
     val messages: MutableLiveData<List<MessageItemUi>> =  MutableLiveData();
@@ -21,17 +23,30 @@ class ChatViewModel : ViewModel() {
     }
 
     public fun sendMessage(content: String){
-        messageService!!.sendMessage(this.chatId,content,{},{})
+        messageService!!.sendMessage(this.chatId,content,{
+            loadMessages()
+        },{})
     }
 
     fun loadMessages() {
         messageService!!.getMessages(chatId, { msg ->
             val temp: MutableList<MessageItemUi> = mutableListOf()
             msg.forEach() {
+                val date: LocalDateTime = it.getCreatedDate()
                 if ((it.senderId==userId)) {
-                    temp.add(MessageItemUi(it.getMessageContent(), Color.WHITE, it.username,TYPE_PRIMARY_MESSAGE))
+                    temp.add(MessageItemUi(
+                        it.getMessageContent(),
+                            Color.WHITE,
+                            it.username,
+                            date.format(DateTimeFormatter.ofPattern("HH:mm")),
+                            TYPE_PRIMARY_MESSAGE))
                 } else {
-                    temp.add(MessageItemUi(it.getMessageContent(), Color.WHITE, it.username,TYPE_SECONDARY_MESSAGE))
+                    temp.add(MessageItemUi(
+                        it.getMessageContent(),
+                        Color.WHITE,
+                        it.username,
+                        date.format(DateTimeFormatter.ofPattern("HH:mm")),
+                        TYPE_SECONDARY_MESSAGE))
                 }
             }
             messages.postValue(temp);

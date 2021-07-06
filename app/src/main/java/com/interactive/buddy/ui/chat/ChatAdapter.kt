@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.interactive.buddy.R
 import com.interactive.buddy.ui.chat.MessageItemUi.Companion.TYPE_PRIMARY_MESSAGE
 import com.interactive.buddy.ui.chat.MessageItemUi.Companion.TYPE_SECONDARY_MESSAGE
-import com.interactive.buddy.ui.chatList.ChatItemUi
 
 class ChatAdapter() : RecyclerView.Adapter<MessageViewHolder<*>>() {
     val data = mutableListOf<MessageItemUi>()
@@ -50,17 +49,21 @@ class ChatAdapter() : RecyclerView.Adapter<MessageViewHolder<*>>() {
 
     class PrimaryMessageViewHolder(val view: View) : MessageViewHolder<MessageItemUi>(view) {
         private val messageContent = view.findViewById<TextView>(R.id.message)
+        private val messageTimeContent = view.findViewById<TextView>(R.id.messageTime)
 
         override fun bind(item: MessageItemUi) {
             messageContent.text = item.content
+            messageTimeContent.text = item.created
             messageContent.setTextColor(item.textColor)
         }
     }
     class SecondaryMessageViewHolder(val view: View) : MessageViewHolder<MessageItemUi>(view) {
         private val messageContent = view.findViewById<TextView>(R.id.message)
+        private val messageTimeContent = view.findViewById<TextView>(R.id.messageTime)
 
         override fun bind(item: MessageItemUi) {
             messageContent.text = item.content
+            messageTimeContent.text = item.created
             messageContent.setTextColor(item.textColor)
         }
 

@@ -23,7 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.chat.ui.ChatActivity" />
+        <activity android:name=".ui.chat.ui.ChatActivity"
+            android:theme="@style/Theme.Buddy.NoActionBar"/>
         <activity
             android:name=".ui.navigation.NavigationActivity"
             android:label="@string/title_activity_navigation" />

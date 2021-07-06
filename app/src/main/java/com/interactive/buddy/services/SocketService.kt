@@ -16,6 +16,7 @@ import com.google.gson.reflect.TypeToken
 import com.interactive.buddy.R
 import com.interactive.buddy.data.App
 import com.interactive.buddy.data.SharedPrefManager
+import com.interactive.buddy.data.URLs
 import com.interactive.buddy.data.model.Message
 import com.interactive.buddy.ui.chat.ui.ChatActivity
 import io.socket.client.IO
@@ -75,7 +76,7 @@ class SocketService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         try {
-            mSocket = IO.socket("http://192.168.0.106:8000").connect()
+            mSocket = IO.socket(URLs.URL_MESSAGE_SOCKET).connect()
         } catch (e: URISyntaxException) {
             throw RuntimeException(e)
         }

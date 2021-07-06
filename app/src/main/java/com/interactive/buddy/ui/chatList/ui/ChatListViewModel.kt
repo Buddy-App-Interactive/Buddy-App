@@ -18,13 +18,13 @@ class ChatListViewModel : ViewModel() {
         return chats
     }
 
-    private fun loadChats() {
+    fun loadChats() {
         // Fetch requests.
         chatService!!.getChats({ ch ->
             val temp: MutableList<ChatItemUi> = mutableListOf()
             ch.forEach(){
                 //TODO: CHANGE THIS to correct types
-                temp.add(ChatItemUi(username = it.username, mood = Mood.HAPPY,_id = it._id, TYPE_NORMAL_CHAT))
+                temp.add(ChatItemUi(username = it.username, mood = Mood.HAPPY,_id = it._id,it.lastMessage, TYPE_NORMAL_CHAT))
             }
             chats.postValue(temp);
         }, { })

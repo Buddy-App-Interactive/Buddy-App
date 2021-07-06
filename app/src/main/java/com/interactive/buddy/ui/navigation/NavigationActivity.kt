@@ -33,4 +33,9 @@ private lateinit var binding: ActivityNavigationBinding
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        this.finishAffinity()
+    }
 }

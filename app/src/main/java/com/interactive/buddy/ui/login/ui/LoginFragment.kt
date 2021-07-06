@@ -18,6 +18,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputEditText
 import com.interactive.buddy.R
+import com.interactive.buddy.data.App
 import com.interactive.buddy.databinding.FragmentLoginBinding
 import com.interactive.buddy.ui.login.LoggedInUserView
 import com.interactive.buddy.ui.login.LoginViewModel
@@ -178,7 +179,8 @@ class LoginFragment : Fragment() {
             Toast.LENGTH_LONG
         ).show()
 
-
+        var app = App();
+        app.loginDone()
 
         val myIntent = Intent(this.requireContext(), NavigationActivity::class.java)
         this.startActivity(myIntent)

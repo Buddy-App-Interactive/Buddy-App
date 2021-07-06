@@ -4,6 +4,7 @@ import android.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.interactive.buddy.data.App
 import com.interactive.buddy.services.MessageService
 import com.interactive.buddy.ui.chat.MessageItemUi
 import com.interactive.buddy.ui.chat.MessageItemUi.Companion.TYPE_PRIMARY_MESSAGE
@@ -23,7 +24,7 @@ class ChatViewModel : ViewModel() {
         messageService!!.sendMessage(this.chatId,content,{},{})
     }
 
-    private fun loadMessages() {
+    fun loadMessages() {
         messageService!!.getMessages(chatId, { msg ->
             val temp: MutableList<MessageItemUi> = mutableListOf()
             msg.forEach() {

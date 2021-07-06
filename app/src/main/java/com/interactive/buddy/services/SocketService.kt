@@ -1,23 +1,23 @@
 package com.interactive.buddy.services
 
 import android.app.*
-import android.app.Notification.DEFAULT_VIBRATE
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.media.RingtoneManager
 import android.os.Build
 import android.os.IBinder
+import android.util.Log
 import androidx.annotation.Nullable
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.interactive.buddy.R
+import com.interactive.buddy.data.App
 import com.interactive.buddy.data.SharedPrefManager
 import com.interactive.buddy.data.model.Message
-import com.interactive.buddy.ui.navigation.NavigationActivity
+import com.interactive.buddy.ui.chat.ui.ChatActivity
 import io.socket.client.IO
 import io.socket.client.Socket
 import java.net.URISyntaxException
@@ -93,20 +93,36 @@ class SocketService : Service() {
 
         mSocket.on("NEW_MESSAGE") { args ->
             if (args[0] != null) {
-                val type = object : TypeToken<Message>() {}.type
-                val messages = Gson().fromJson<Message>(args[0] as String, type)
 
-                var builder = NotificationCompat.Builder(this, CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_baseline_message_24)
-                    .setContentTitle(messages.username)
-                    .setContentText(messages.getMessageContent())
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                with(NotificationManagerCompat.from(this)) {
-                    // notificationId is a unique int for each notification that you must define
-                    notify(messages.chatId.hashCode(), builder.build())
+                val type = object : TypeToken<Message>() {}.type
+                val message: Message = Gson().fromJson(args[0].toString(), type)
+                App.messageCollector.postValue(true)
+                Log.d(App.currentChatId.value,message.chatId)
+
+                if(!App.currentChatId.value.equals(message.chatId) && SharedPrefManager.getInstance(ctx).isLoggedIn) {
+                    val myIntent = Intent(this, ChatActivity::class.java)
+                    myIntent.putExtra("chatId",message.chatId)
+                    val pendingIntent = PendingIntent.getActivity(
+                        this,
+                        0,
+                        myIntent,
+                        Intent.FILL_IN_ACTION
+                    )
+
+                    var builder = NotificationCompat.Builder(this, CHANNEL_ID)
+                        .setSmallIcon(R.drawable.ic_baseline_message_24)
+                        .setContentTitle(message.username)
+                        .setContentText(message.getMessageContent())
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setContentIntent(pendingIntent)
+
+                    with(NotificationManagerCompat.from(this)) {
+                        // notificationId is a unique int for each notification that you must define
+                        notify(message._id.hashCode(), builder.build())
+                    }
                 }
             }
-        }
+        };
 
 
             return super.onStartCommand(intent, flags, startId)

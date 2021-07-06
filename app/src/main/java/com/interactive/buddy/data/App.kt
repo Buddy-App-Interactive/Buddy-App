@@ -6,17 +6,32 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.MutableLiveData
 import com.interactive.buddy.R
 import com.interactive.buddy.services.SocketService
 
 class App : Application() {
     private var CHANNEL_ID : String = "NEW_MESSAGE";
+    companion object {
+        var messageCollector: MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
+        var currentChatId: MutableLiveData<String> = MutableLiveData<String>("none")
+    }
 
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel();
+        if(SharedPrefManager.getInstance(this).isLoggedIn) {
+            val intent = Intent(this, SocketService::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                ContextCompat.startForegroundService(this, intent)
+            } else {
+                this.startService(intent)
+            }
+        }
+    }
+
+    fun loginDone(){
         val intent = Intent(this, SocketService::class.java)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             ContextCompat.startForegroundService(this, intent)

@@ -4,7 +4,6 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
@@ -32,14 +31,14 @@ class SocketService : Service() {
     override fun onCreate() {
         super.onCreate()
 
-        val icon = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
+        val icon = BitmapFactory.decodeResource(resources, R.drawable.logo)
 
         val notificationBuilder: NotificationCompat.Builder
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
             val notificationChannel =
                 NotificationChannel(CHANNEL_ID, "TAG", NotificationManager.IMPORTANCE_DEFAULT)
-            notificationChannel.enableVibration(true)
+            notificationChannel.enableVibration(false)
             (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(
                 notificationChannel
             )
@@ -50,8 +49,8 @@ class SocketService : Service() {
             .setContentText("Buddy app is running in Background")
             .setAutoCancel(true)
             .setLargeIcon(icon)
-            .setColor(Color.RED)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.logo)
+            .setSilent(true)
 
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(0, notificationBuilder.build())
@@ -64,6 +63,7 @@ class SocketService : Service() {
             notificationManager.createNotificationChannel(channel)
             val notification: Notification = Notification.Builder(applicationContext, CHANNEL_ID).build()
             startForeground(1, notification)
+            notificationManager.cancel(1)
         } else {
             // startForeground(1, notification);
         }

@@ -22,10 +22,10 @@ class OpenRequestsListAdapter(private var c: Context, private var requests: List
             view = LayoutInflater.from(c).inflate(R.layout.open_requests_list_item, viewGroup, false)
         }
 
-        val tvCreator = view!!.findViewById(R.id.limit) as TextView
+        val tvCreator = view!!.findViewById(R.id.creator) as TextView
         val imageView = view.findViewById(R.id.icon) as ImageView
         val tvType = view!!.findViewById(R.id.type) as TextView
-        val tvTimeStamp = view!!.findViewById(R.id.timeStamp) as TextView
+        val tvTimeStamp = view!!.findViewById(R.id.timestamp) as TextView
 
         val current = this.getItem(i) as Request
 

@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 import java.util.*
 
 data class Request(
-    val id : UUID,
+    val _id : String,
     val id_creator: String,
     val description: String,
     val type: RequestType,

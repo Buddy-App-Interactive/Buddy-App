@@ -77,7 +77,7 @@ class RequestFragment : Fragment(), View.OnClickListener {
                 // TODO: handle or whatever
             })
 
-            ((requireActivity() as NavigationActivity).supportActionBar)!!.title = "Open requests"
+            ((requireActivity() as NavigationActivity).supportActionBar)!!.title = "My requests"
         }
 
         else {
@@ -90,7 +90,7 @@ class RequestFragment : Fragment(), View.OnClickListener {
                 // TODO: handle or whatever
             }, true)
 
-            ((requireActivity() as NavigationActivity).supportActionBar)!!.title = "My requests"
+            ((requireActivity() as NavigationActivity).supportActionBar)!!.title = "Open requests"
         }
 
         btnMyRequests.setOnClickListener(this);
@@ -122,7 +122,7 @@ class RequestFragment : Fragment(), View.OnClickListener {
 
             val fm: FragmentManager = requireActivity().supportFragmentManager
             val transaction: FragmentTransaction = fm.beginTransaction()
-            transaction.replace(R.id.container, fragment).addToBackStack( "tag" ).commit();
+            transaction.replace(R.id.container, fragment).addToBackStack( "r" ).commit();
         } else if (v!!.id == R.id.fabCreateRequest) {
             val fm: FragmentManager = requireActivity().supportFragmentManager
             val transaction: FragmentTransaction = fm.beginTransaction()

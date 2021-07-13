@@ -1,5 +1,6 @@
 package com.interactive.buddy.ui.request
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Build
@@ -114,9 +115,10 @@ class NewRequestFragment : Fragment(), View.OnClickListener, AdapterView.OnItemS
             val startHour = currentDateTime.get(Calendar.HOUR_OF_DAY)
             val startMinute = currentDateTime.get(Calendar.MINUTE)
 
-            DatePickerDialog(requireContext(), MaterialDatePicker.STYLE_NORMAL, { _, year, month, day ->
+            DatePickerDialog(requireContext(), AlertDialog.THEME_DEVICE_DEFAULT_DARK, { _, year, month, day ->
                 TimePickerDialog(
                     requireContext(),
+                    AlertDialog.THEME_DEVICE_DEFAULT_DARK,
                     { _, hour, minute ->
                         var pickedDateTime = Calendar.getInstance()
                         pickedDateTime.set(year, month, day, hour, minute)

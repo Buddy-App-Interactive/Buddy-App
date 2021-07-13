@@ -118,17 +118,15 @@ class RequestFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         if(v!!.id == R.id.btnMyRequests) {
-            val fragment: Fragment = RequestFragment.newInstance(false)
+            val fragment: Fragment = newInstance(false)
 
             val fm: FragmentManager = requireActivity().supportFragmentManager
             val transaction: FragmentTransaction = fm.beginTransaction()
-            transaction.replace(R.id.container, fragment)
-            transaction.commit()
+            transaction.replace(R.id.container, fragment).addToBackStack( "tag" ).commit();
         } else if (v!!.id == R.id.fabCreateRequest) {
             val fm: FragmentManager = requireActivity().supportFragmentManager
             val transaction: FragmentTransaction = fm.beginTransaction()
-            transaction.replace(R.id.container, NewRequestFragment())
-            transaction.commit()
+            transaction.replace(R.id.container, NewRequestFragment()).addToBackStack( "tag" ).commit();
         }
     }
 }

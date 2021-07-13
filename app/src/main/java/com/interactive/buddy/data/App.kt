@@ -31,12 +31,12 @@ class App : Application() {
         }
     }
 
-    fun loginDone(){
-        val intent = Intent(this, SocketService::class.java)
+    fun loginDone(context: Context = this){
+        val intent = Intent(context, SocketService::class.java)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            ContextCompat.startForegroundService(this, intent)
+            ContextCompat.startForegroundService(context, intent)
         } else {
-            this.startService(intent)
+            context.startService(intent)
         }
     }
 

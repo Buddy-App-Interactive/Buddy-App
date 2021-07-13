@@ -180,7 +180,7 @@ class LoginFragment : Fragment() {
         ).show()
 
         var app = App();
-        app.loginDone()
+        app.loginDone(this.requireContext())
 
         val myIntent = Intent(this.requireContext(), NavigationActivity::class.java)
         this.startActivity(myIntent)

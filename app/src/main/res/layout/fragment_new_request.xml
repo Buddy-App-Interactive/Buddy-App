@@ -67,12 +67,30 @@
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editEndDateLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editLanguagesLayout"
+        android:hint="@string/editExtHint_EndDate"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="100dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
     <Button
         android:id="@+id/btnCreateRequest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btn_create_request"
-        android:layout_below="@id/editLanguagesLayout"
+        android:layout_below="@id/editEndDateLayout"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         android:background="@drawable/rounded_corners"

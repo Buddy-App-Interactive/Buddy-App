@@ -72,7 +72,6 @@ class NewRequestFragment : Fragment(), View.OnClickListener, AdapterView.OnItemS
                     .isNotEmpty()
             ) {
                 val type = RequestType.values().get(spType.selectedItemPosition)
-                //val userId = UUID.fromString(SharedPrefManager.getInstance(requireContext()).user.userId)
                 val request = Request(UUID.randomUUID(), UUID.randomUUID(), editDescription.text.toString(), type, editLimit.text.toString().toInt(), LocalDateTime.now());
                 requestService.createRequest({createdRequest ->
                     //yes

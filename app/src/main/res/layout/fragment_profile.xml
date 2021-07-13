@@ -88,10 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnSaveLanguage"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="121dp"
-        android:layout_marginTop="162dp"
-        android:layout_marginBottom="22dp"
-        android:layout_toEndOf="@+id/btnSaveLanguage"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
         android:text="Logout" />
 </RelativeLayout>

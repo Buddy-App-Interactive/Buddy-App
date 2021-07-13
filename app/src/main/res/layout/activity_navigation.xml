@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-android:id="@+id/container"
-android:layout_width="match_parent"
-android:layout_height="match_parent">
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment_activity_navigation"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:defaultNavHost="true"
+        app:defaultNavHost="false"
         app:navGraph="@navigation/mobile_navigation" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:translationZ="100dp"
         android:layout_gravity="bottom">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -26,11 +26,13 @@ android:layout_height="match_parent">
             android:layout_height="wrap_content"
             android:layout_marginBottom="100dp"
             android:contentDescription="TODO"
+            android:foreground="@drawable/ic_smiley_sad"
+            android:foregroundTint="@color/white"
+            app:backgroundTint="@color/backgroundDark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.25"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_smiley_sad" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_ok"
@@ -38,10 +40,12 @@ android:layout_height="match_parent">
             android:layout_height="wrap_content"
             android:layout_marginBottom="150dp"
             android:contentDescription="TODO"
+            android:foreground="@drawable/ic_smiley_ok"
+            android:foregroundTint="@color/white"
+            app:backgroundTint="@color/backgroundDark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_smiley_ok" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_happy"
@@ -49,11 +53,26 @@ android:layout_height="match_parent">
             android:layout_height="wrap_content"
             android:layout_marginBottom="100dp"
             android:contentDescription="TODO"
+            android:foreground="@drawable/ic_smiley_happy"
+            android:foregroundTint="@color/white"
+            app:backgroundTint="@color/backgroundDark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.75"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_smiley_happy" />
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textMoodSelect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="220dp"
+            android:text="@string/selectMood"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -62,7 +81,8 @@ android:layout_height="match_parent">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:backgroundTint="@color/backgroundDark"
+        android:background="@color/backgroundDarker"
+        android:backgroundTint="@color/backgroundDarker"
         app:contentInsetEnd="0dp"
         app:contentInsetStart="0dp"
         app:fabCradleMargin="10dp"
@@ -74,16 +94,23 @@ android:layout_height="match_parent">
             android:id="@+id/nav_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/backgroundDark"
+            android:background="@android:color/transparent"
+            android:backgroundTint="@android:color/transparent"
+            app:backgroundTint="@android:color/transparent"
+            app:itemIconTint="@drawable/menu_selector"
+            app:itemTextColor="@drawable/menu_selector"
+            app:labelVisibilityMode="labeled"
             app:menu="@menu/bottom_nav_menu" />
 
     </com.google.android.material.bottomappbar.BottomAppBar>
 
-<com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:id="@+id/moodSelectFab"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:contentDescription="@string/app_name"
-    android:src="@drawable/ic_smiley_happy"
-    app:layout_anchor="@id/bottomAppBar" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/moodSelectFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:foreground="@drawable/ic_smiley_happy"
+        android:foregroundTint="@color/white"
+        app:backgroundTint="@color/backgroundDark"
+        app:layout_anchor="@id/bottomAppBar" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

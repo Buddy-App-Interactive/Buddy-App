@@ -1,7 +1,9 @@
 package com.interactive.buddy.ui.navigation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -9,7 +11,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.interactive.buddy.R
+import com.interactive.buddy.data.SharedPrefManager
 import com.interactive.buddy.databinding.ActivityNavigationBinding
+import com.interactive.buddy.services.MoodService
 import kotlinx.android.synthetic.main.activity_navigation.*
 
 
@@ -36,7 +40,15 @@ private var isFABOpen: Boolean = false
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        nav_view.background = null
         val moodSelectFab: FloatingActionButton = binding.moodSelectFab
+        moodSelectFab.setBackgroundResource(
+            when (SharedPrefManager.getInstance(this).user.mood) {
+            1 -> R.drawable.ic_smiley_sad
+            2 -> R.drawable.ic_smiley_ok
+            3 -> R.drawable.ic_smiley_happy
+                else -> R.drawable.ic_smiley_happy
+            })
         fab_sad.alpha = 0f;
         fab_sad.translationY = 100f;
         fab_sad.translationX = 100f;
@@ -45,7 +57,30 @@ private var isFABOpen: Boolean = false
         fab_happy.alpha = 0f;
         fab_happy.translationY = 100f;
         fab_happy.translationX = -100f;
+        textMoodSelect.alpha = 0f;
+        val service = MoodService(this)
 
+        fab_sad.setOnClickListener {
+            val user = SharedPrefManager.getInstance(this).user;
+            user.mood = 1
+            SharedPrefManager.getInstance(this).userLogin(user)
+            service.changeMood({},{})
+            updateMood()
+        }
+        fab_ok.setOnClickListener {
+            val user = SharedPrefManager.getInstance(this).user;
+            user.mood = 2
+            SharedPrefManager.getInstance(this).userLogin(user)
+            service.changeMood({},{})
+            updateMood()
+        }
+        fab_happy.setOnClickListener {
+            val user = SharedPrefManager.getInstance(this).user;
+            user.mood = 3
+            SharedPrefManager.getInstance(this).userLogin(user)
+            service.changeMood({},{})
+            updateMood()
+        }
         moodSelectFab.setOnClickListener {
             if (!isFABOpen) {
                 showFABMenu()
@@ -53,6 +88,18 @@ private var isFABOpen: Boolean = false
                 closeFABMenu()
             }
         }
+    }
+
+    private fun updateMood(){
+        Log.d("frog", SharedPrefManager.getInstance(this).user.mood.toString())
+        moodSelectFab.foreground=
+            when (SharedPrefManager.getInstance(this).user.mood) {
+                1 -> AppCompatResources.getDrawable(this, R.drawable.ic_smiley_sad)
+                2 -> AppCompatResources.getDrawable(this, R.drawable.ic_smiley_ok)
+                3 -> AppCompatResources.getDrawable(this, R.drawable.ic_smiley_happy)
+                else -> AppCompatResources.getDrawable(this, R.drawable.ic_smiley_happy)
+            }
+        closeFABMenu()
     }
 
     override fun onBackPressed() {
@@ -65,6 +112,7 @@ private var isFABOpen: Boolean = false
         fab_sad.animate().alpha(1f).translationYBy(-100f).translationXBy(-100f).setDuration(500);
         fab_ok.animate().alpha(1f).translationYBy(-150f).setDuration(500);
         fab_happy.animate().alpha(1f).translationYBy(-100f).translationXBy(100f).setDuration(500);
+        textMoodSelect.animate().alpha(1f).setDuration(500);
     }
 
     private fun closeFABMenu() {
@@ -72,5 +120,6 @@ private var isFABOpen: Boolean = false
         fab_sad.animate().alpha(0f).translationYBy(100f).translationXBy(100f).setDuration(500);
         fab_ok.animate().alpha(0f).translationYBy(150f).setDuration(500);
         fab_happy.animate().alpha(0f).translationYBy(100f).translationXBy(-100f).setDuration(500);
+        textMoodSelect.animate().alpha(0f).setDuration(500);
     }
 }

@@ -25,9 +25,9 @@ class ChatListViewModel : ViewModel() {
             ch.forEach(){
                 var mood: Mood = Mood.HAPPY
                 when (it.mood) {
-                    1 -> mood = Mood.HAPPY
+                    1 -> mood = Mood.SAD
                     2 -> mood = Mood.OK
-                    3 -> mood = Mood.SAD
+                    3 -> mood = Mood.HAPPY
                 }
                 temp.add(ChatItemUi(username = it.username, mood = mood,_id = it._id,it.lastMessage, TYPE_NORMAL_CHAT))
             }

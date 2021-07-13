@@ -29,12 +29,13 @@ class RegisterDataSource {
                         userJson.getString("username"),
                         userJson.getString("email"),
                         null,
-                        userJson.getString("jwt")
+                        userJson.getString("jwt"),
+                        userJson.getInt("mood"),
                     )
                     SharedPrefManager.getInstance(context).userLogin(user)
                     callback.onSuccess(user);
                 },
-                { error -> error.message?.let { Log.d("FROG", it) }
+                { error -> error.message?.let { Log.d("ERROR", it) }
                     callback.onError(IOException("Error logging in")) })
             {
                 override fun getParams(): Map<String, String> {
@@ -65,11 +66,12 @@ class RegisterDataSource {
                         userJson.getString("email"),
                         userJson.getString("loginKey"),
                         userJson.getString("jwt"),
+                        userJson.getInt("mood"),
                     )
                     SharedPrefManager.getInstance(context).userLogin(user)
                     callback.onSuccess(user);
                 },
-                { error -> error.message?.let { Log.d("FROG", it) }
+                { error -> error.message?.let { Log.d("ERROR", it) }
                     callback.onError(IOException("Error logging in")) })
             {
                 override fun getParams(): Map<String, String> {

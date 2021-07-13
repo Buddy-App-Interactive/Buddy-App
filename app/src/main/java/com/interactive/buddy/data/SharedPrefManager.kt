@@ -18,6 +18,7 @@ class SharedPrefManager private constructor(private var mCtx: Context) {
         editor.putString(KEY_EMAIL, user.email)
         editor.putString(KEY_KEY, user.key)
         editor.putString(KEY_JWT, user.jwt)
+        editor.putInt(KEY_MOOD, user.mood)
         editor.apply()
     }
 
@@ -38,7 +39,8 @@ class SharedPrefManager private constructor(private var mCtx: Context) {
                 sharedPreferences.getString(KEY_USERNAME, null)!!,
                 sharedPreferences.getString(KEY_EMAIL, null),
                 sharedPreferences.getString(KEY_KEY, null),
-                sharedPreferences.getString(KEY_JWT, null)!!
+                sharedPreferences.getString(KEY_JWT, null)!!,
+                sharedPreferences.getInt(KEY_MOOD, 3),
             )
         }
 
@@ -61,6 +63,7 @@ class SharedPrefManager private constructor(private var mCtx: Context) {
         private const val KEY_KEY = "keykey"
         private const val KEY_ID = "keyid"
         private const val KEY_JWT = "keyjwt"
+        private const val KEY_MOOD = "keymood"
 
         private var mInstance: SharedPrefManager? = null
         @Synchronized

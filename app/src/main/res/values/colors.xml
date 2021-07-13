@@ -4,6 +4,8 @@
     <color name="secondary">#903749</color>
     <color name="backgroundLight">#202239</color>
     <color name="backgroundDark">#1C1E34</color>
+    <color name="backgroundDarker">#151727</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>
+

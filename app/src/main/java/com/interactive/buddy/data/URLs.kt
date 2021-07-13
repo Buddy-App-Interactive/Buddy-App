@@ -10,4 +10,5 @@ object URLs {
     const val URL_MESSAGE_SOCKET = ROOT_URL
     const val URL_MESSAGES = ROOT_URL + "messages"
     const val URL_SEND_MESSAGE = ROOT_URL + "message/send"
+    const val URL_MOODS = ROOT_URL + "moods"
 }

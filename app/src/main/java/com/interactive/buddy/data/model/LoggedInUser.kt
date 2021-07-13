@@ -8,5 +8,7 @@ data class LoggedInUser(
         val username: String,
         val email: String?,
         val key: String?,
-        val jwt: String
-)
+        val jwt: String,
+        var mood: Int
+){
+}

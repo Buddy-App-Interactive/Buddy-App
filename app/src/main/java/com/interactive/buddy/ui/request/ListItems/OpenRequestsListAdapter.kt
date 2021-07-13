@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.interactive.buddy.R
 import com.interactive.buddy.data.model.request.Request
+import com.interactive.buddy.data.model.request.RequestType
 
 class OpenRequestsListAdapter(private var c: Context, private var requests: List<Request>) : BaseAdapter() {
 
@@ -22,15 +23,22 @@ class OpenRequestsListAdapter(private var c: Context, private var requests: List
         }
 
         val tvCreator = view!!.findViewById(R.id.limit) as TextView
-        //val imageView = view.findViewById(R.id.type) as ImageView
+        val imageView = view.findViewById(R.id.icon) as ImageView
         val tvType = view!!.findViewById(R.id.type) as TextView
         val tvTimeStamp = view!!.findViewById(R.id.timeStamp) as TextView
 
         val current = this.getItem(i) as Request
 
+        when (current.type) {
+            RequestType.BORED -> imageView.setImageResource(R.drawable.ic_smiley_ok)
+            RequestType.JUSTTALK -> imageView.setImageResource(R.drawable.ic_smiley_ok)
+            RequestType.HAPPY -> imageView.setImageResource(R.drawable.ic_smiley_happy)
+            RequestType.DEPRESSED -> imageView.setImageResource(R.drawable.ic_smiley_sad)
+        }
         tvCreator.text = current.description
         tvType.text = current.type.toString()
-        tvTimeStamp.text = current.id_creator.toString()
+        tvTimeStamp.text = current.id_creator
+        imageView
 
         //handle itemclicks for the ListView
         //view.setOnClickListener { Toast.makeText(c, current.id.toString(), Toast.LENGTH_SHORT).show() }

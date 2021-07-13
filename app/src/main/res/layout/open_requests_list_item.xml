@@ -27,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:text="Creator"
                 android:textStyle="bold"
+                android:textColor="@color/white"
                 android:layout_marginLeft="15dp"
                 android:layout_marginStart="15dp"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
@@ -39,18 +40,21 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="5dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/white"
                 android:textSize="16sp"/>
-
         </LinearLayout>
 
         <TextView
             android:id="@+id/timeStamp"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="5dp"
             android:text="TimeStamp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/white"
             android:textSize="16sp" />
     </LinearLayout>
 </LinearLayout>

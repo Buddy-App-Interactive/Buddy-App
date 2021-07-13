@@ -65,4 +65,5 @@
     <string name="btn_create_request">Create Request</string>
     <string name="btn_save_language">Save language</string>
     <string name="selectMood">Select Your Mood</string>
+    <string name="editExtHint_EndDate">End of chatrequest</string>
 </resources>

@@ -80,8 +80,8 @@ class NewRequestFragment : Fragment(), View.OnClickListener, AdapterView.OnItemS
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(v: View?) {
         if(v!!.id == R.id.btnCreateRequest) {
-            if (editDescription.text.toString().isNotEmpty() && editLimit.text.toString().toString()
-                    .isNotEmpty()
+            if (editDescription.text.toString().isNotEmpty() && editLimit.text.toString()
+                    .isNotEmpty() && editEndDate.text.toString().isNotEmpty()
             ) {
                 try {
                     val type = RequestType.values().get(spType.selectedItemPosition)

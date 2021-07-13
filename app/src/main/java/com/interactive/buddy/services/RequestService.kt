@@ -5,11 +5,11 @@ import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import com.interactive.buddy.data.SharedPrefManager
 import com.interactive.buddy.data.URLs
 import com.interactive.buddy.data.model.request.Request
-import java.text.DateFormat
+import java.lang.reflect.Type
 
 
 class RequestService {
@@ -30,7 +30,8 @@ class RequestService {
         val stringRequest: StringRequest = object : StringRequest(
             Method.GET, URLs.URL_REQUESTS,
             { response ->
-                val requests = Gson().fromJson<List<Request>>(response, listOf<Request>()::class.java);
+                val requestListType: Type = object : TypeToken<ArrayList<Request?>?>() {}.type
+                val requests = Gson().fromJson<List<Request>>(response, requestListType)
                 successCallback.invoke(requests)
             },
             { error ->

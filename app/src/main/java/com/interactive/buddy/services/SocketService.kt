@@ -103,6 +103,7 @@ class SocketService : Service() {
                 if(!App.currentChatId.value.equals(message.chatId) && SharedPrefManager.getInstance(ctx).isLoggedIn) {
                     val myIntent = Intent(this, ChatActivity::class.java)
                     myIntent.putExtra("chatId",message.chatId)
+                    myIntent.putExtra("chatName",message.username)
                     val pendingIntent = PendingIntent.getActivity(
                         this,
                         0,

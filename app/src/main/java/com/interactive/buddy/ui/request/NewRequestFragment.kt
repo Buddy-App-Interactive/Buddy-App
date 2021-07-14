@@ -18,6 +18,7 @@ import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.interactive.buddy.R
 import com.interactive.buddy.data.SharedPrefManager
+import com.interactive.buddy.data.model.User
 import com.interactive.buddy.data.model.request.Request
 import com.interactive.buddy.data.model.request.RequestType
 import com.interactive.buddy.services.RequestService
@@ -93,7 +94,7 @@ class NewRequestFragment : Fragment(), View.OnClickListener, AdapterView.OnItemS
                     val request = Request(java.util.Random().ints(12, 0, source.length)
                         .toArray()
                         .map(source::get)
-                        .joinToString(""), userId, editDescription.text.toString(), type, editLimit.text.toString().toInt(), myDate.time);
+                        .joinToString(""), User(userId), editDescription.text.toString(), type, editLimit.text.toString().toInt(), myDate.time);
                     requestService.createRequest({createdRequest ->
                         //Go to overview of all requests if we created the request
                         requireActivity().findNavController(R.id.nav_host_fragment_activity_navigation).popBackStack()

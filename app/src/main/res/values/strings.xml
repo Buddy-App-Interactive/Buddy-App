@@ -31,6 +31,12 @@
     <string name="title_activity_request_fragment">RequestFragment</string>
     <string name="copy_key_message">Please Store this key you need it in thee future to login</string>
     <string name="copy">Copy key and continue</string>
+    <string name="updateUserData">Save Userdata</string>
+    <string name="userdata">Userdata</string>
+    <string name="updatePasswordData">Update Password</string>
+    <string name="logout">Logout</string>
+    <string name="passwordUpdatedSnackbar">Password Updated!</string>
+    <string name="userdataUpdatedSnackbar">Userdata Updated!</string>
 
     <!-- Strings used for Chat -->
     <string name="message_placeholder">Message…</string>

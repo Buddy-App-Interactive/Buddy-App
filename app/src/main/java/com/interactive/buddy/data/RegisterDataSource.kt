@@ -63,7 +63,7 @@ class RegisterDataSource {
                     val user = LoggedInUser(
                         userJson.getString("id"),
                         userJson.getString("username"),
-                        userJson.getString("email"),
+                        if(userJson.has("email")) userJson.getString("email") else null,
                         userJson.getString("loginKey"),
                         userJson.getString("jwt"),
                         userJson.getInt("mood"),

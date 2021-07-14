@@ -23,7 +23,7 @@
             android:id="@+id/passwordRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
+            android:inputType="textWebPassword"
             android:password="true"
             android:singleLine="true" />
 
@@ -114,7 +114,7 @@
             android:id="@+id/emailRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
+            android:inputType="textWebEmailAddress"
             android:singleLine="true" />
 
     </com.google.android.material.textfield.TextInputLayout>

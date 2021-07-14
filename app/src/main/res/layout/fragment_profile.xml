@@ -1,94 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profileLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="70dp"
     tools:context=".ui.profile.ProfileFragment">
 
-    <EditText
-        android:id="@+id/editUsername"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/UserdataText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/userdata"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/usernameUpdateLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:hint="@string/editTextHint_username"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="100dp"/>
+        android:layout_marginEnd="20dp"
+        android:hint="@string/prompt_username"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.038"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/UserdataText">
 
-    <EditText
-        android:id="@+id/editEmail"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/usernameUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:singleLine="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailUpdateLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editUsername"
-        android:layout_marginTop="5dp"
-        android:hint="@string/editTextHint_email"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="100dp"/>
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:hint="@string/prompt_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.038"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usernameUpdateLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emailUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:singleLine="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/btnSaveProfile"
+        android:id="@+id/updateUserData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btn_save_profile"
-        android:layout_below="@id/editEmail"
-        android:layout_marginLeft="20dp"
-        />
+        android:layout_gravity="start"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="48dp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@color/primary"
+        android:text="@string/updateUserData"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailUpdateLayout" />
 
-    <EditText
-        android:id="@+id/editPassword"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/PasswordText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnSaveProfile"
         android:layout_marginTop="20dp"
-        android:hint="@string/editTextHint_password"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="100dp"/>
+        android:text="@string/prompt_password"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updateUserData" />
 
-    <EditText
-        android:id="@+id/editRepeatPassword"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordUpdateLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editPassword"
-        android:layout_marginTop="5dp"
-        android:hint="@string/editTextHint_repeatPassword"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="100dp"/>
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:hint="@string/prompt_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.038"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PasswordText">
 
-    <Button
-        android:id="@+id/btnChangePassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_save_password"
-        android:layout_below="@id/editRepeatPassword"
-        android:layout_marginLeft="20dp"
-        />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textWebPassword"
+            android:singleLine="true" />
 
-    <EditText
-        android:id="@+id/editLanguages"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordRepeatUpdateLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnChangePassword"
-        android:hint="@string/editTextHint_languages"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="100dp"/>
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:hint="@string/prompt_password_repeat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.038"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordUpdateLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordRepeatUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:singleLine="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/btnSaveLanguage"
+        android:id="@+id/updatePasswordData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btn_save_language"
-        android:layout_below="@id/editLanguages"
-        android:layout_marginLeft="20dp"
-        />
+        android:layout_gravity="start"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="48dp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@color/primary"
+        android:text="@string/updatePasswordData"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordRepeatUpdateLayout" />
 
     <Button
-        android:id="@+id/logoutButton"
+        android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnSaveLanguage"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:text="Logout" />
-</RelativeLayout>
+        android:layout_gravity="start"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@color/primary"
+        android:text="@string/logout"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updatePasswordData" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

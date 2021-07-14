@@ -14,7 +14,7 @@ import com.interactive.buddy.data.model.LoggedInUser
 import com.interactive.buddy.data.model.request.Request
 
 
-class MoodService {
+class ProfileService {
     lateinit var jwt: String;
     lateinit var ctx: Context;
     lateinit var queue: RequestQueue;
@@ -27,10 +27,10 @@ class MoodService {
         this.ctx = ctx;
     }
 
-    fun changeMood(successCallback: () -> Unit, errorCallback: () -> Unit) {
+    fun updateUserdata(successCallback: () -> Unit, errorCallback: () -> Unit) {
         val stringRequest: StringRequest = object : StringRequest(
-            Method.POST, URLs.URL_MOODS,
-            { response ->
+            Method.POST, URLs.URL_USERDATA,
+            {
                 successCallback.invoke()
             },
             { error ->
@@ -42,8 +42,31 @@ class MoodService {
                 val params: MutableMap<String, String> = HashMap()
                 user = SharedPrefManager.getInstance(ctx).user
                 params["Authorization"] = "Bearer $jwt"
-                params["user_id"] = user.userId
-                params["mood"] = user.mood.toString()
+                if(user.email != null)
+                    params["email"] = user.email!!
+                params["username"] = user.username
+                return params
+            }
+        }
+        queue.add(stringRequest)
+    }
+
+    fun updatePassword(password: String, successCallback: () -> Unit, errorCallback: () -> Unit) {
+        val stringRequest: StringRequest = object : StringRequest(
+            Method.POST, URLs.URL_PASSWORD,
+            {
+                successCallback.invoke()
+            },
+            { error ->
+                errorCallback.apply { error }
+                errorCallback.invoke()
+            },
+        ) {
+            override fun getHeaders(): Map<String, String>? {
+                val params: MutableMap<String, String> = HashMap()
+                user = SharedPrefManager.getInstance(ctx).user
+                params["Authorization"] = "Bearer $jwt"
+                params["password"] = password
                 return params
             }
         }

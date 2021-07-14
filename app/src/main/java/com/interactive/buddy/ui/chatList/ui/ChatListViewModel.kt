@@ -8,7 +8,6 @@ import com.interactive.buddy.data.model.Mood
 import com.interactive.buddy.services.ChatService
 import com.interactive.buddy.ui.chatList.ChatItemUi
 import com.interactive.buddy.ui.chatList.ChatItemUi.Companion.TYPE_NORMAL_CHAT
-import com.interactive.buddy.ui.request.ListItems.YourRequestsListAdapter
 
 class ChatListViewModel : ViewModel() {
     val chats: MutableLiveData<List<ChatItemUi>> =  MutableLiveData();

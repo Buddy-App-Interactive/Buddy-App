@@ -16,7 +16,12 @@ class Message constructor (
     private val content: String) {
 
     fun getMessageContent(): String{
-        return Gson().fromJson(content, String::class.java);
+        try{
+            return Gson().fromJson(content, String::class.java);
+        }catch (ex: Exception){
+            return "No messages sent yet.."
+        }
+
     }
 
     override fun toString(): String {

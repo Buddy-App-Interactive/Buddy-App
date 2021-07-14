@@ -1,22 +1,29 @@
 package com.interactive.buddy.ui.request
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ListView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.interactive.buddy.R
+import com.interactive.buddy.data.model.Mood
+import com.interactive.buddy.services.ChatService
 import com.interactive.buddy.services.RequestService
-import com.interactive.buddy.ui.request.ListItems.OpenRequestsListAdapter
-import com.interactive.buddy.ui.request.ListItems.YourRequestsListAdapter
+import com.interactive.buddy.ui.chat.ui.ChatActivity
+import com.interactive.buddy.ui.chatList.ChatListAdapter
 import com.interactive.buddy.ui.navigation.NavigationActivity
+import com.interactive.buddy.ui.request.ListItems.MyRequestsListAdapter
+import com.interactive.buddy.ui.request.ListItems.RequestItemUI
+import com.interactive.buddy.ui.request.ListItems.RequestItemUI.Companion.TYPE_MY_REQUEST
+import com.interactive.buddy.ui.request.ListItems.RequestItemUI.Companion.TYPE_OPEN_REQUEST
+import kotlinx.android.synthetic.main.fragment_request.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -31,27 +38,25 @@ private const val IS_OPEN_REQUESTS = "isOpenRequests"
 class RequestFragment : Fragment(), View.OnClickListener {
 
     // TODO: Rename and change types of parameters
-    private var isOpenRequests: Boolean = true
+    private var isOpenRequests: Boolean = false
     private lateinit var fabCreateRequest: FloatingActionButton;
     private lateinit var btnMyRequests: Button;
-    private lateinit var lvRequests: ListView
 
     private lateinit var requestService : RequestService
+    private lateinit var chatService : ChatService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            isOpenRequests = it.getBoolean(IS_OPEN_REQUESTS)
-        }
+        requestService = RequestService(requireContext());
+        chatService = ChatService(requireContext())
+        displayRequests(false)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        requestService = RequestService(requireContext());
 
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_request, container, false)
     }
 
@@ -62,36 +67,8 @@ class RequestFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         fabCreateRequest = view.findViewById(R.id.fabCreateRequest);
         btnMyRequests = view.findViewById(R.id.btnMyRequests);
-        lvRequests = view.findViewById(R.id.lvRequests) as ListView;
+        rvRequests.layoutManager = LinearLayoutManager(context)
 
-        // If not open requests view hide my requests button.
-        if(!isOpenRequests) {
-            btnMyRequests.visibility = View.INVISIBLE;
-
-            // Fetch requests.
-            requestService.getRequests({ requests ->
-                val requestListAdapter = YourRequestsListAdapter(this.requireContext(), requests)
-                lvRequests.adapter = requestListAdapter;
-            },
-            {
-                // TODO: handle or whatever
-            })
-
-            ((requireActivity() as NavigationActivity).supportActionBar)!!.title = "My requests"
-        }
-
-        else {
-            // Fetch requests.
-            requestService.getRequests({ requests ->
-                val requestListAdapter = OpenRequestsListAdapter(this.requireContext(), requests)
-                lvRequests.adapter = requestListAdapter;
-            },
-            {
-                // TODO: handle or whatever
-            }, true)
-
-            ((requireActivity() as NavigationActivity).supportActionBar)!!.title = "Open requests"
-        }
 
         btnMyRequests.setOnClickListener(this);
         fabCreateRequest.setOnClickListener(this)
@@ -116,17 +93,66 @@ class RequestFragment : Fragment(), View.OnClickListener {
             }
     }
 
+    private fun displayRequests(isOwn: Boolean){
+        if(!isOwn) {
+            // Fetch requests.
+            requestService.getRequests({ requests ->
+                val requestAdapter = MyRequestsListAdapter()
+                val requestUI: MutableList<RequestItemUI> = mutableListOf()
+                for (req in requests) {
+                    requestUI.add(RequestItemUI(req, TYPE_OPEN_REQUEST))
+                }
+                requestAdapter.submitNewData(requestUI)
+                val fragment = this
+                requestAdapter.setOnItemClickListener(object : MyRequestsListAdapter.OnItemClickListener {
+                    override fun onItemClick(requestId: String, creatorId: String) {
+                        chatService.createChat(creatorId,requestId,{ chat ->
+                            val myIntent = Intent(fragment.requireContext(), ChatActivity::class.java)
+                            myIntent.putExtra("chatId",chat._id)
+                            myIntent.putExtra("chatName",chat.username)
+                            myIntent.putExtra("moodResource",
+                                when (chat.mood) {
+                                3 -> R.drawable.ic_smiley_happy
+                                2 -> R.drawable.ic_smiley_ok
+                                1 -> R.drawable.ic_smiley_sad
+                                    else -> R.drawable.ic_smiley_happy
+                                })
+                            fragment.startActivity(myIntent)
+                        },{
+
+                        })
+                    }
+                })
+                rvRequests.adapter = requestAdapter;
+            }, {}, false)
+            ((requireActivity() as NavigationActivity).supportActionBar)!!.title = "Open requests"
+        }else{
+            requestService.getRequests({ requests ->
+                val requestAdapter = MyRequestsListAdapter()
+                val requestUI: MutableList<RequestItemUI> = mutableListOf()
+                for (req in requests){
+                    requestUI.add(RequestItemUI(req,TYPE_MY_REQUEST))
+                }
+                requestAdapter.submitNewData(requestUI)
+                rvRequests.adapter = requestAdapter;
+                ((requireActivity() as NavigationActivity).supportActionBar)!!.title = "My requests"
+            },
+                {
+                }, true)
+        }
+    }
+
     override fun onClick(v: View?) {
         if(v!!.id == R.id.btnMyRequests) {
-            val fragment: Fragment = newInstance(false)
-
-            val fm: FragmentManager = requireActivity().supportFragmentManager
-            val transaction: FragmentTransaction = fm.beginTransaction()
-            transaction.replace(R.id.container, fragment).addToBackStack( "r" ).commit();
+            isOpenRequests = !isOpenRequests
+            displayRequests(isOpenRequests)
         } else if (v!!.id == R.id.fabCreateRequest) {
-            val fm: FragmentManager = requireActivity().supportFragmentManager
-            val transaction: FragmentTransaction = fm.beginTransaction()
-            transaction.replace(R.id.container, NewRequestFragment()).addToBackStack( "tag" ).commit();
+            requireActivity().findNavController(R.id.nav_host_fragment_activity_navigation).navigate(R.id.navigation_new_request)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        displayRequests(isOpenRequests)
     }
 }

@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken
 import com.interactive.buddy.data.SharedPrefManager
 import com.interactive.buddy.data.URLs
 import com.interactive.buddy.data.model.Chat
+import com.interactive.buddy.data.model.Message
 
 
 class ChatService {
@@ -40,6 +41,28 @@ class ChatService {
             override fun getHeaders(): Map<String, String>? {
                 val params: MutableMap<String, String> = HashMap()
                 params["Authorization"] = "Bearer $jwt"
+                return params
+            }}
+        queue.add(stringRequest)
+    }
+
+    fun createChat(creatorId:String, requestId:String, successCallback: (Chat) -> Unit, errorCallback: (Exception) -> Unit) {
+        val stringRequest: StringRequest = object : StringRequest(
+            Method.POST, URLs.URL_CHATS,
+            { res ->
+                val type = object : TypeToken<Chat>() {}.type
+                successCallback.invoke(Gson().fromJson(res, type))
+            },
+            { error ->
+                errorCallback.apply { error }
+                errorCallback.invoke(error)
+            },
+        ) {
+            override fun getHeaders(): Map<String, String>? {
+                val params: MutableMap<String, String> = HashMap()
+                params["Authorization"] = "Bearer $jwt"
+                params["requestId"] = requestId
+                params["creatorId"] = creatorId
                 return params
             }}
         queue.add(stringRequest)

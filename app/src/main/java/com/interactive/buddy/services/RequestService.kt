@@ -28,7 +28,7 @@ class RequestService {
         if(isOwn) url = URLs.URL_OWN_REQUESTS;
 
         val stringRequest: StringRequest = object : StringRequest(
-            Method.GET, URLs.URL_REQUESTS,
+            Method.GET, url,
             { response ->
                 val requestListType: Type = object : TypeToken<ArrayList<Request?>?>() {}.type
                 val requests = Gson().fromJson<List<Request>>(response, requestListType)

@@ -29,7 +29,7 @@
     <string name="terms_conditions">Terms and Conditions</string>
     <string name="register_key_title">Register anonymously</string>
     <string name="title_activity_request_fragment">RequestFragment</string>
-    <string name="copy_key_message">Please Store this key you need it in thee future to login</string>
+    <string name="copy_key_message">Please Store this key you need it in the future to login</string>
     <string name="copy">Copy key and continue</string>
     <string name="updateUserData">Save Userdata</string>
     <string name="userdata">Userdata</string>

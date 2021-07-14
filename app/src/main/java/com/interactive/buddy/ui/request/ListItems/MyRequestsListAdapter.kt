@@ -33,7 +33,7 @@ class MyRequestsListAdapter() : RecyclerView.Adapter<RequestViewHolder<*>>() {
                 val view = LayoutInflater.from(context).inflate(R.layout.my_requests_list_item, parent, false)
                 val viewholder = MyRequestViewHolder(view)
                 view.setOnClickListener {
-                    onItemClickListener?.onItemClick(data[viewholder.adapterPosition].request._id,data[viewholder.adapterPosition].request.id_creator);
+                    onItemClickListener?.onItemClick(data[viewholder.adapterPosition].request._id,data[viewholder.adapterPosition].request.creator._id);
                 }
                 viewholder
             }
@@ -41,7 +41,7 @@ class MyRequestsListAdapter() : RecyclerView.Adapter<RequestViewHolder<*>>() {
                 val view = LayoutInflater.from(context).inflate(R.layout.open_requests_list_item, parent, false)
                 val viewholder = OpenRequestViewHolder(view)
                 view.setOnClickListener {
-                    onItemClickListener?.onItemClick(data[viewholder.adapterPosition].request._id,data[viewholder.adapterPosition].request.id_creator)
+                    onItemClickListener?.onItemClick(data[viewholder.adapterPosition].request._id,data[viewholder.adapterPosition].request.creator._id)
                 }
                 viewholder
             }
@@ -75,7 +75,7 @@ class MyRequestsListAdapter() : RecyclerView.Adapter<RequestViewHolder<*>>() {
         private val imageMood = view.findViewById<ImageView>(R.id.moodMyRequestList)
 
         override fun bind(item: RequestItemUI) {
-            username.text = item.request.id_creator
+            username.text = item.request.creator.username
             desc.text = item.request.description
             time.text = item.request.type.name
 
@@ -95,7 +95,7 @@ class MyRequestsListAdapter() : RecyclerView.Adapter<RequestViewHolder<*>>() {
         private val imageMood = view.findViewById<ImageView>(R.id.moodRequestList)
 
         override fun bind(item: RequestItemUI) {
-            username.text = item.request.id_creator
+            username.text = item.request.creator.username
             desc.text = item.request.description
             time.text = item.request.type.name
 

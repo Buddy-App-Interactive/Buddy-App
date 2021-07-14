@@ -3,6 +3,8 @@ package com.interactive.buddy.data.model
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import org.apache.commons.lang.StringEscapeUtils
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -17,7 +19,7 @@ class Message constructor (
 
     fun getMessageContent(): String{
         try{
-            return Gson().fromJson(content, String::class.java);
+            return StringEscapeUtils.unescapeJava(content)
         }catch (ex: Exception){
             return "No messages sent yet.."
         }

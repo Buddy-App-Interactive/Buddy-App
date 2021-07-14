@@ -6,10 +6,12 @@ import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.interactive.buddy.data.SharedPrefManager
 import com.interactive.buddy.data.URLs
 import com.interactive.buddy.data.model.Message
+import org.apache.commons.lang.StringEscapeUtils
 
 
 class MessageService {
@@ -34,7 +36,7 @@ class MessageService {
                 }catch (ex:Exception){
                     ex.message?.let { Log.d("error", it) }
                 }
-                Log.d("aaa",messages.toString())
+                Log.d("aaa",messages[messages.size-1].getMessageContent())
                 successCallback.invoke(messages)
             },
             { error ->
@@ -68,7 +70,7 @@ class MessageService {
                 val params: MutableMap<String, String> = HashMap()
                 params["Authorization"] = "Bearer $jwt"
                 params["chat_id"] = chat_id
-                params["content"] = Gson().toJson(content)
+                params["content"] = StringEscapeUtils.escapeJava(content)
                 return params
             }
         }

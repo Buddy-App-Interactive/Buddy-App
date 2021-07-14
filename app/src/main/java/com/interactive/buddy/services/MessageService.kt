@@ -36,7 +36,6 @@ class MessageService {
                 }catch (ex:Exception){
                     ex.message?.let { Log.d("error", it) }
                 }
-                Log.d("aaa",messages[messages.size-1].getMessageContent())
                 successCallback.invoke(messages)
             },
             { error ->

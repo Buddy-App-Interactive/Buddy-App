@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/main_nav">
+
+    <action android:id="@+id/NewRequest"
+        app:destination="@id/newRequestLayout"/>
+
+</navigation>

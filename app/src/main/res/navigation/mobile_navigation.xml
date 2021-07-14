@@ -32,4 +32,11 @@
         android:name="com.interactive.buddy.ui.profile.ProfileFragment"
         android:label="@string/menu_profile"
         tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/navigation_new_request"
+        android:name="com.interactive.buddy.ui.request.NewRequestFragment"
+        android:label="@string/menu_new_request"
+        tools:layout="@layout/fragment_new_request" >
+    </fragment>
 </navigation>

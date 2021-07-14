@@ -2,8 +2,10 @@ package com.interactive.buddy.ui.navigation
 
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -19,7 +21,8 @@ import kotlinx.android.synthetic.main.activity_navigation.*
 
 class NavigationActivity : AppCompatActivity() {
 
-private lateinit var binding: ActivityNavigationBinding
+    public lateinit var navController: NavController
+    private lateinit var binding: ActivityNavigationBinding
 private var isFABOpen: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +34,7 @@ private var isFABOpen: Boolean = false
         val navView: BottomNavigationView = binding.navView
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_navigation) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(setOf(
@@ -121,5 +124,10 @@ private var isFABOpen: Boolean = false
         fab_ok.animate().alpha(0f).translationYBy(150f).setDuration(500);
         fab_happy.animate().alpha(0f).translationYBy(100f).translationXBy(-100f).setDuration(500);
         textMoodSelect.animate().alpha(0f).setDuration(500);
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        navController.popBackStack()
+        return super.onOptionsItemSelected(item);
     }
 }

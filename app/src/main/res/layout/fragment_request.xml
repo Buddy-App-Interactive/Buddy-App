@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="70dp"
-    android:onClick="handleBtnClick"
-    tools:context=".ui.request.RequestFragment"
-    android:background="@color/backgroundLight">
+    android:background="@color/backgroundLight"
+    tools:context=".ui.request.RequestFragment">
 
-    <ListView
-        android:id="@+id/lvRequests"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRequests"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ListView>
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnMyRequests"
@@ -23,8 +24,8 @@
         android:layout_marginStart="8dp"
         android:background="@drawable/rounded_corners"
         android:backgroundTint="@color/primary"
-        android:textColor="@color/white"
         android:text="My requests"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

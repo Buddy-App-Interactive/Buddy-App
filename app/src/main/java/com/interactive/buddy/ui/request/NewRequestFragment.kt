@@ -3,28 +3,28 @@ package com.interactive.buddy.ui.request
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import com.google.android.material.datepicker.MaterialDatePicker
+import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.interactive.buddy.R
 import com.interactive.buddy.data.SharedPrefManager
 import com.interactive.buddy.data.model.request.Request
 import com.interactive.buddy.data.model.request.RequestType
 import com.interactive.buddy.services.RequestService
+import com.interactive.buddy.ui.navigation.NavigationActivity
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.ZoneId
 import java.util.*
+
 
 class NewRequestFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSelectedListener {
     private lateinit var spType: Spinner
@@ -44,6 +44,7 @@ class NewRequestFragment : Fragment(), View.OnClickListener, AdapterView.OnItemS
         savedInstanceState: Bundle?
     ): View? {
         requestService = RequestService(requireContext())
+        ((requireActivity() as NavigationActivity).supportActionBar)!!.title = "Create new request"
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_new_request, container, false)
@@ -88,14 +89,14 @@ class NewRequestFragment : Fragment(), View.OnClickListener, AdapterView.OnItemS
                     val type = RequestType.values().get(spType.selectedItemPosition)
                     val userId = SharedPrefManager.getInstance(requireContext()).user.userId
 
-                    val request = Request(UUID.randomUUID().toString(), userId, editDescription.text.toString(), type, editLimit.text.toString().toInt(), myDate.time);
+                    val source = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+                    val request = Request(java.util.Random().ints(12, 0, source.length)
+                        .toArray()
+                        .map(source::get)
+                        .joinToString(""), userId, editDescription.text.toString(), type, editLimit.text.toString().toInt(), myDate.time);
                     requestService.createRequest({createdRequest ->
                         //Go to overview of all requests if we created the request
-                        val fragment: Fragment = RequestFragment.newInstance(true)
-                        val fm: FragmentManager = requireActivity().supportFragmentManager
-                        val transaction: FragmentTransaction = fm.beginTransaction()
-                        transaction.replace(R.id.container, fragment)
-                        transaction.commit()
+                        requireActivity().findNavController(R.id.nav_host_fragment_activity_navigation).popBackStack()
                     }, {
                         //Error happened
                         Snackbar.make(requireActivity().findViewById(R.id.container), "An error occurred when creating your request.", Snackbar.LENGTH_LONG).show();

@@ -1,6 +1,7 @@
 package com.interactive.buddy.ui.chat.ui
 
 import android.graphics.Color
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,6 +24,7 @@ class ChatViewModel : ViewModel() {
     }
 
     public fun sendMessage(content: String){
+        Log.d("message",content)
         messageService!!.sendMessage(this.chatId,content,{
             loadMessages()
         },{})

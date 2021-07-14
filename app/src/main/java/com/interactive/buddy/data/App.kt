@@ -7,6 +7,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.content.ContextCompat
+import androidx.emoji.bundled.BundledEmojiCompatConfig
+import androidx.emoji.text.EmojiCompat
 import androidx.lifecycle.MutableLiveData
 import com.interactive.buddy.R
 import com.interactive.buddy.services.SocketService
@@ -21,6 +23,17 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel();
+        // add below code in onCreate() method
+        val emojiConfig = BundledEmojiCompatConfig(this)
+        emojiConfig.setReplaceAll(true)
+            .registerInitCallback(object : EmojiCompat.InitCallback() {
+                override fun onInitialized() {
+                }
+
+                override fun onFailed(throwable: Throwable?) {
+                }
+            })
+        EmojiCompat.init(emojiConfig)
         if(SharedPrefManager.getInstance(this).isLoggedIn) {
             val intent = Intent(this, SocketService::class.java)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

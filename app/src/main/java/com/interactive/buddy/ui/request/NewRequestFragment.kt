@@ -45,7 +45,12 @@ class NewRequestFragment : Fragment(), View.OnClickListener, AdapterView.OnItemS
         savedInstanceState: Bundle?
     ): View? {
         requestService = RequestService(requireContext())
-        ((requireActivity() as NavigationActivity).supportActionBar)!!.title = "Create new request"
+        if (SharedPrefManager.getInstance(requireContext()).isEditRequest) {
+            ((requireActivity() as NavigationActivity).supportActionBar)!!.title = "Edit request"
+        }
+        else {
+            ((requireActivity() as NavigationActivity).supportActionBar)!!.title = "Create new request"
+        }
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_new_request, container, false)
@@ -71,6 +76,16 @@ class NewRequestFragment : Fragment(), View.OnClickListener, AdapterView.OnItemS
             RequestType.values())
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spType.adapter = dataAdapter
+
+        if (SharedPrefManager.getInstance(requireContext()).isEditRequest) {
+            btnCreateRequest.text = "Update request"
+            var request = SharedPrefManager.getInstance(requireContext()).editRequest
+            editDescription.setText(request?.description)
+            var limit = request?.limit
+            editLimit.setText(limit.toString())
+            editLanguages.setText(request?.language)
+            editEndDate.setText(sdf.format(request?.endDate))
+        }
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -87,21 +102,40 @@ class NewRequestFragment : Fragment(), View.OnClickListener, AdapterView.OnItemS
                     .isNotEmpty() && editEndDate.text.toString().isNotEmpty()
             ) {
                 try {
-                    val type = RequestType.values().get(spType.selectedItemPosition)
-                    val userId = SharedPrefManager.getInstance(requireContext()).user.userId
+                    if (!SharedPrefManager.getInstance(requireContext()).isEditRequest) {
+                        val type = RequestType.values().get(spType.selectedItemPosition)
+                        val userId = SharedPrefManager.getInstance(requireContext()).user.userId
 
-                    val source = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-                    val request = Request(java.util.Random().ints(12, 0, source.length)
-                        .toArray()
-                        .map(source::get)
-                        .joinToString(""), User(userId), editDescription.text.toString(), type, editLimit.text.toString().toInt(), myDate.time);
-                    requestService.createRequest({createdRequest ->
-                        //Go to overview of all requests if we created the request
-                        requireActivity().findNavController(R.id.nav_host_fragment_activity_navigation).popBackStack()
-                    }, {
-                        //Error happened
-                        Snackbar.make(requireActivity().findViewById(R.id.container), "An error occurred when creating your request.", Snackbar.LENGTH_LONG).show();
-                    }, request)
+                        val source = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+                        val request = Request(
+                            Random().ints(12, 0, source.length)
+                            .toArray()
+                            .map(source::get)
+                            .joinToString(""), User(userId), editDescription.text.toString(), type, editLimit.text.toString().toInt(), editLanguages.text.toString(), myDate.time);
+                        requestService.createRequest({createdRequest ->
+                            //Go to overview of all requests if we created the request
+                            requireActivity().findNavController(R.id.nav_host_fragment_activity_navigation).popBackStack()
+                        }, {
+                            //Error happened
+                            Snackbar.make(requireActivity().findViewById(R.id.container), "An error occurred when creating your request.", Snackbar.LENGTH_LONG).show();
+                        }, request)
+                    } else {
+                        val type = RequestType.values().get(spType.selectedItemPosition)
+                        val userId = SharedPrefManager.getInstance(requireContext()).user.userId
+
+                        var date = sdf.parse(editEndDate.text.toString())
+                        var id: String = SharedPrefManager.getInstance(requireContext()).editRequest!!._id
+                        val request = Request(id,
+                            User(userId), editDescription.text.toString(), type, editLimit.text.toString().toInt(),
+                            editLanguages.text.toString(), date)
+                        requestService.updateRequest({createdRequest ->
+                            //Go to overview of all requests if we created the request
+                            requireActivity().findNavController(R.id.nav_host_fragment_activity_navigation).popBackStack()
+                        }, {
+                            //Error happened
+                            Snackbar.make(requireActivity().findViewById(R.id.container), "An error occurred when creating your request.", Snackbar.LENGTH_LONG).show();
+                        }, request)
+                    }
                 } catch (ex: NumberFormatException) {
                     Log.e("Request-Error", ex.message.toString())
                     Snackbar.make(requireActivity().findViewById(R.id.container), "Please enter a number for the limit", Snackbar.LENGTH_LONG).show();

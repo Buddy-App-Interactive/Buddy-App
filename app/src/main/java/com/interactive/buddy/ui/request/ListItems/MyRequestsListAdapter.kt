@@ -1,20 +1,23 @@
 package com.interactive.buddy.ui.request.ListItems
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.interactive.buddy.R
+import com.interactive.buddy.data.SharedPrefManager
 import com.interactive.buddy.data.model.request.RequestType
 import com.interactive.buddy.ui.request.ListItems.RequestItemUI.Companion.TYPE_MY_REQUEST
 import com.interactive.buddy.ui.request.ListItems.RequestItemUI.Companion.TYPE_OPEN_REQUEST
 
 
-class MyRequestsListAdapter() : RecyclerView.Adapter<RequestViewHolder<*>>() {
+class MyRequestsListAdapter(fragmentActivity: FragmentActivity) : RecyclerView.Adapter<RequestViewHolder<*>>() {
     val data = mutableListOf<RequestItemUI>()
+    var act = fragmentActivity
 
     private var onItemClickListener: OnItemClickListener? = null
 
@@ -31,10 +34,7 @@ class MyRequestsListAdapter() : RecyclerView.Adapter<RequestViewHolder<*>>() {
         return when (viewType) {
             TYPE_MY_REQUEST -> {
                 val view = LayoutInflater.from(context).inflate(R.layout.my_requests_list_item, parent, false)
-                val viewholder = MyRequestViewHolder(view)
-                view.setOnClickListener {
-                    onItemClickListener?.onItemClick(data[viewholder.adapterPosition].request._id,data[viewholder.adapterPosition].request.creator._id);
-                }
+                val viewholder = MyRequestViewHolder(view, act)
                 viewholder
             }
             TYPE_OPEN_REQUEST -> {
@@ -68,22 +68,31 @@ class MyRequestsListAdapter() : RecyclerView.Adapter<RequestViewHolder<*>>() {
             notifyDataSetChanged()
     }
 
-    class MyRequestViewHolder(val view: View) : RequestViewHolder<RequestItemUI>(view) {
+    class MyRequestViewHolder(val view: View, activity: FragmentActivity) : RequestViewHolder<RequestItemUI>(view) {
         private val username = view.findViewById<TextView>(R.id.myRequest_username)
         private val desc = view.findViewById<TextView>(R.id.myRequest_description)
         private val time = view.findViewById<TextView>(R.id.timeMyRequestList)
         private val imageMood = view.findViewById<ImageView>(R.id.moodMyRequestList)
+        private val editRequest = view.findViewById<ImageView>(R.id.editMyRequest)
+        private val act = activity
 
         override fun bind(item: RequestItemUI) {
             username.text = item.request.creator.username
             desc.text = item.request.description
             time.text = item.request.type.name
 
+
+            editRequest.setOnClickListener {
+                SharedPrefManager.getInstance(act).isEditRequest = true
+                SharedPrefManager.getInstance(act).editRequest = item.request
+                act.findNavController(R.id.nav_host_fragment_activity_navigation).navigate(R.id.navigation_new_request)
+            }
+
             when (item.request.type) {
                 RequestType.BORED -> imageMood.setImageResource(R.drawable.ic_smiley_ok)
                 RequestType.JUSTTALK -> imageMood.setImageResource(R.drawable.ic_smiley_ok)
                 RequestType.HAPPY -> imageMood.setImageResource(R.drawable.ic_smiley_happy)
-                RequestType.DEPRESSED -> imageMood.setImageResource(R.drawable.ic_smiley_sad)
+                RequestType.DEPRESSED -> imageMood.setImageResource(R.drawable. ic_smiley_sad)
             }
         }
     }

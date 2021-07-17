@@ -2,6 +2,7 @@ package com.interactive.buddy.ui.navigation
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
@@ -15,23 +16,25 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.interactive.buddy.R
 import com.interactive.buddy.data.SharedPrefManager
 import com.interactive.buddy.databinding.ActivityNavigationBinding
+import com.interactive.buddy.services.ChatService
 import com.interactive.buddy.services.MoodService
 import kotlinx.android.synthetic.main.activity_navigation.*
 
 
 class NavigationActivity : AppCompatActivity() {
-
-    public lateinit var navController: NavController
+    lateinit var navController: NavController
     private lateinit var binding: ActivityNavigationBinding
-private var isFABOpen: Boolean = false
+    private var isFABOpen: Boolean = false
+    var chatService: ChatService? = null
+    lateinit var navView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-     binding = ActivityNavigationBinding.inflate(layoutInflater)
-     setContentView(binding.root)
+         binding = ActivityNavigationBinding.inflate(layoutInflater)
+         setContentView(binding.root)
 
-        val navView: BottomNavigationView = binding.navView
+        navView = binding.navView
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_navigation) as NavHostFragment
         navController = navHostFragment.navController
@@ -42,6 +45,9 @@ private var isFABOpen: Boolean = false
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        this.chatService = ChatService(this);
+        loadKarma()
 
         nav_view.background = null
         val moodSelectFab: FloatingActionButton = binding.moodSelectFab
@@ -129,5 +135,19 @@ private var isFABOpen: Boolean = false
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         navController.popBackStack()
         return super.onOptionsItemSelected(item);
+    }
+
+    private fun loadKarma() {
+        chatService!!.getKarma(
+            SharedPrefManager.getInstance(this).user.userId,
+        { karma ->
+            Log.d("Karma", karma)
+            val menu: Menu = navView.menu
+            menu.findItem(R.id.navigation_karma).title = karma
+            SharedPrefManager.getInstance(applicationContext).karma = karma
+        },
+        {
+
+        })
     }
 }

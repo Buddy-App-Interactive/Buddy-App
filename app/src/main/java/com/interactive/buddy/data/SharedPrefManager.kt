@@ -44,6 +44,8 @@ class SharedPrefManager private constructor(private var mCtx: Context) {
             )
         }
 
+    var karma: String = "0"
+
     //this method will logout the user
     fun logout() {
         val sharedPreferences: SharedPreferences = mCtx.getSharedPreferences(

@@ -67,4 +67,27 @@ class ChatService {
             }}
         queue.add(stringRequest)
     }
+
+    fun getKarma(creatorId:String, successCallback: (String) -> Unit, errorCallback: (Exception) -> Unit) {
+        val stringRequest: StringRequest = object : StringRequest(
+            Method.GET, URLs.URL_CHATS_KARMA,
+            { response ->
+                Log.d("Response", response.toString())
+                val type = object : TypeToken<String>() {}.type
+                successCallback.invoke(Gson().fromJson(response, type))
+            },
+            { error ->
+                Log.d("NETWORKERROR:", error.toString())
+                errorCallback.apply { error }
+                errorCallback.invoke(error)
+            },
+        ) {
+            override fun getHeaders(): Map<String, String>? {
+                val params: MutableMap<String, String> = HashMap()
+                params["Authorization"] = "Bearer $jwt"
+                params["creatorId"] = creatorId
+                return params
+            }}
+        queue.add(stringRequest)
+    }
 }

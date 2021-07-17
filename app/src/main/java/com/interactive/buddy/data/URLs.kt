@@ -1,7 +1,7 @@
 package com.interactive.buddy.data
 
 object URLs {
-    private const val ROOT_URL = "http://10.0.0.4:8000/"
+    private const val ROOT_URL = "https://aau-buddy-app.herokuapp.com/"
     const val URL_REGISTER = ROOT_URL + "register"
     const val URL_LOGIN = ROOT_URL + "login"
     const val URL_REQUESTS = ROOT_URL + "requests"

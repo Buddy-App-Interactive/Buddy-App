@@ -24,6 +24,7 @@ import com.interactive.buddy.ui.request.ListItems.RequestItemUI
 import com.interactive.buddy.ui.request.ListItems.RequestItemUI.Companion.TYPE_MY_REQUEST
 import com.interactive.buddy.ui.request.ListItems.RequestItemUI.Companion.TYPE_OPEN_REQUEST
 import kotlinx.android.synthetic.main.fragment_request.*
+import kotlinx.android.synthetic.main.fragment_request.view.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -47,7 +48,7 @@ class RequestFragment : Fragment(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestService = RequestService(requireContext());
+        requestService = RequestService(requireContext())
         chatService = ChatService(requireContext())
         displayRequests(false)
     }
@@ -56,7 +57,6 @@ class RequestFragment : Fragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return inflater.inflate(R.layout.fragment_request, container, false)
     }
 
@@ -69,11 +69,8 @@ class RequestFragment : Fragment(), View.OnClickListener {
         btnMyRequests = view.findViewById(R.id.btnMyRequests);
         rvRequests.layoutManager = LinearLayoutManager(context)
 
-
         btnMyRequests.setOnClickListener(this);
         fabCreateRequest.setOnClickListener(this)
-
-
     }
 
     companion object {
@@ -97,7 +94,7 @@ class RequestFragment : Fragment(), View.OnClickListener {
         if(!isOwn) {
             // Fetch requests.
             requestService.getRequests({ requests ->
-                val requestAdapter = MyRequestsListAdapter()
+                val requestAdapter = MyRequestsListAdapter(requireActivity())
                 val requestUI: MutableList<RequestItemUI> = mutableListOf()
                 for (req in requests) {
                     requestUI.add(RequestItemUI(req, TYPE_OPEN_REQUEST))
@@ -128,7 +125,7 @@ class RequestFragment : Fragment(), View.OnClickListener {
             ((requireActivity() as NavigationActivity).supportActionBar)!!.title = "Open requests"
         }else{
             requestService.getRequests({ requests ->
-                val requestAdapter = MyRequestsListAdapter()
+                val requestAdapter = MyRequestsListAdapter(requireActivity())
                 val requestUI: MutableList<RequestItemUI> = mutableListOf()
                 for (req in requests){
                     requestUI.add(RequestItemUI(req,TYPE_MY_REQUEST))
@@ -137,8 +134,8 @@ class RequestFragment : Fragment(), View.OnClickListener {
                 rvRequests.adapter = requestAdapter;
                 ((requireActivity() as NavigationActivity).supportActionBar)!!.title = "My requests"
             },
-                {
-                }, true)
+            {
+            }, true)
         }
     }
 

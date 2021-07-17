@@ -1,8 +1,6 @@
 package com.interactive.buddy.data.model.request
 
-import com.interactive.buddy.data.model.LoggedInUser
 import com.interactive.buddy.data.model.User
-import java.time.LocalDateTime
 import java.util.*
 
 data class Request(
@@ -11,5 +9,6 @@ data class Request(
     val description: String,
     val type: RequestType,
     val limit: Int,
+    var language: String,
     val endDate: Date,
 )

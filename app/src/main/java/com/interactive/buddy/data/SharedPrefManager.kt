@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.SharedPreferences
 import com.interactive.buddy.data.model.LoggedInUser
+import com.interactive.buddy.data.model.request.Request
 import com.interactive.buddy.ui.login.LoginRegisterActivity
 
 class SharedPrefManager private constructor(private var mCtx: Context) {
@@ -45,6 +46,8 @@ class SharedPrefManager private constructor(private var mCtx: Context) {
         }
 
     var karma: String = "0"
+    var isEditRequest: Boolean = false
+    var editRequest: Request? = null
 
     //this method will logout the user
     fun logout() {

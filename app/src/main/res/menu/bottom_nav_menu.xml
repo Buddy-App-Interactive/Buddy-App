@@ -13,7 +13,7 @@
 
     <item
         android:id="@+id/navigation_karma"
-        android:icon="@drawable/ic_baseline_account_circle_24"
+        android:icon="@drawable/ic_outline_star_24"
         android:title="@string/menu_karma"/>
 
     <item

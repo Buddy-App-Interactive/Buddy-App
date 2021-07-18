@@ -50,7 +50,6 @@ class RequestFragment : Fragment(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         requestService = RequestService(requireContext())
         chatService = ChatService(requireContext())
-        displayRequests(false)
     }
 
     override fun onCreateView(
@@ -68,6 +67,7 @@ class RequestFragment : Fragment(), View.OnClickListener {
         fabCreateRequest = view.findViewById(R.id.fabCreateRequest);
         btnMyRequests = view.findViewById(R.id.btnMyRequests);
         rvRequests.layoutManager = LinearLayoutManager(context)
+        displayRequests(false)
 
         btnMyRequests.setOnClickListener(this);
         fabCreateRequest.setOnClickListener(this)
@@ -123,6 +123,7 @@ class RequestFragment : Fragment(), View.OnClickListener {
                 rvRequests.adapter = requestAdapter;
             }, {}, false)
             ((requireActivity() as NavigationActivity).supportActionBar)!!.title = "Open requests"
+            btnMyRequests.text = "My requests"
         }else{
             requestService.getRequests({ requests ->
                 val requestAdapter = MyRequestsListAdapter(requireActivity())
@@ -133,6 +134,7 @@ class RequestFragment : Fragment(), View.OnClickListener {
                 requestAdapter.submitNewData(requestUI)
                 rvRequests.adapter = requestAdapter;
                 ((requireActivity() as NavigationActivity).supportActionBar)!!.title = "My requests"
+                btnMyRequests.text = "Open requests"
             },
             {
             }, true)

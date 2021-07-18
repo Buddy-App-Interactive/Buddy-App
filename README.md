@@ -40,8 +40,14 @@ Install app on android phone and you're ready to go. Webservice is hosted on Her
 - bcrypt - for password hashing and salting
 - dotenv - for .env file support
 
+### DevOp
+- Sonarcloud - Scanning for codesmells
+- Github Actions - CI for Build, Unit testing ...
 
-
+### Usability
+- Paper Prototype See Usability Page
+- Digital Prototype
+- Usability Tests
 
 ## Group Members:
 - Raphael Burgstaller

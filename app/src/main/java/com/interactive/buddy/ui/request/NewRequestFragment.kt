@@ -85,6 +85,8 @@ class NewRequestFragment : Fragment(), View.OnClickListener, AdapterView.OnItemS
             editLimit.setText(limit.toString())
             editLanguages.setText(request?.language)
             editEndDate.setText(sdf.format(request?.endDate))
+            SharedPrefManager.getInstance(requireContext()).isEditRequest = false
+            SharedPrefManager.getInstance(requireContext()).editRequest = null
         }
     }
 
@@ -135,8 +137,6 @@ class NewRequestFragment : Fragment(), View.OnClickListener, AdapterView.OnItemS
                             //Error happened
                             Snackbar.make(requireActivity().findViewById(R.id.container), "An error occurred when creating your request.", Snackbar.LENGTH_LONG).show();
                         }, request)
-                        SharedPrefManager.getInstance(requireContext()).isEditRequest = false
-                        SharedPrefManager.getInstance(requireContext()).editRequest = null
                     }
                 } catch (ex: NumberFormatException) {
                     Log.e("Request-Error", ex.message.toString())
